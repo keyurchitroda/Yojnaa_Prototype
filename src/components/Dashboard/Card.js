@@ -1,56 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
 const Card = () => {
-  const arrayCard = [
-    {
-      id: "1",
-      title: "EARNINGS (MONTHLY)1",
-      count: 10,
-    },
-    {
-      id: "2",
-      title: "EARNINGS (MONTHLY)2",
-      count: 11,
-    },
-    {
-      id: "3",
-      title: "EARNINGS (MONTHLY)3",
-      count: 12,
-    },
-    {
-      id: "4",
-      title: "EARNINGS (MONTHLY)4",
-      count: 13,
-    },
-    {
-      id: "5",
-      title: "EARNINGS (MONTHLY)5",
-      count: 14,
-    },
-    {
-      id: "6",
-      title: "EARNINGS (MONTHLY)6",
-      count: 15,
-    },
-    {
-      id: "7",
-      title: "EARNINGS (MONTHLY)7",
-      count: 16,
-    },
-    {
-      id: "8",
-      title: "EARNINGS (MONTHLY)8",
-      count: 17,
-    },
-    {
-      id: "9",
-      title: "EARNINGS (MONTHLY)9",
-      count: 18,
-    },
-  ];
+  const [arrayCard, setArrayCard] = useState([]);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("http://15.206.117.255:8000/schemesd/scheme-counts/", requestOptions)
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response);
+        setArrayCard(response.data);
+      });
+  }, []);
+
+  // const arrayCard = [
+  //   {
+  //     id: "1",
+  //     title: "EARNINGS (MONTHLY)1",
+  //     count: 10,
+  //   },
+  //   {
+  //     id: "2",
+  //     title: "EARNINGS (MONTHLY)2",
+  //     count: 11,
+  //   },
+  //   {
+  //     id: "3",
+  //     title: "EARNINGS (MONTHLY)3",
+  //     count: 12,
+  //   },
+  //   {
+  //     id: "4",
+  //     title: "EARNINGS (MONTHLY)4",
+  //     count: 13,
+  //   },
+  //   {
+  //     id: "5",
+  //     title: "EARNINGS (MONTHLY)5",
+  //     count: 14,
+  //   },
+  //   {
+  //     id: "6",
+  //     title: "EARNINGS (MONTHLY)6",
+  //     count: 15,
+  //   },
+  //   {
+  //     id: "7",
+  //     title: "EARNINGS (MONTHLY)7",
+  //     count: 16,
+  //   },
+  //   {
+  //     id: "8",
+  //     title: "EARNINGS (MONTHLY)8",
+  //     count: 17,
+  //   },
+  //   {
+  //     id: "9",
+  //     title: "EARNINGS (MONTHLY)9",
+  //     count: 18,
+  //   },
+  // ];
 
   const cardsPerPage = 4;
   const totalSets = Math.ceil(arrayCard.length / cardsPerPage);
@@ -75,7 +90,6 @@ const Card = () => {
       autoPlay={true}
       infiniteLoop={true}
       onChange={handleCarouselChange}
-      interval={5000}
       transitionTime={1000}
     >
       {[...Array(totalSets)].map((_, setIndex) => (
@@ -87,10 +101,10 @@ const Card = () => {
                   <div className="row no-gutters align-items-center">
                     <div className="col mr-2">
                       <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        {item.title}
+                        {item.scheme_name}
                       </div>
                       <div className="h5 mb-0 font-weight-bold text-gray-800">
-                        {item.count}
+                        {item.total_beneficiary}
                       </div>
                     </div>
                     <div className="col-auto">

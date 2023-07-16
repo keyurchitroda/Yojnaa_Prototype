@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [style, setStyle] = useState(
     "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
   );
+
+  const navigate = useNavigate();
 
   const changeStyle = () => {
     if (
@@ -15,6 +18,11 @@ const Sidebar = () => {
     } else {
       setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
     }
+  };
+
+  const handleLogout = () => {
+    window.location.href = "/login";
+    localStorage.clear("token");
   };
 
   return (
@@ -108,16 +116,16 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Custom Utilities:</h6>
-            <a className="collapse-item" href="utilities-color.html">
+            <a className="collapse-item" href="#">
               Colors
             </a>
-            <a className="collapse-item" href="utilities-border.html">
+            <a className="collapse-item" href="#">
               Borders
             </a>
-            <a className="collapse-item" href="utilities-animation.html">
+            <a className="collapse-item" href="#">
               Animations
             </a>
-            <a className="collapse-item" href="utilities-other.html">
+            <a className="collapse-item" href="#">
               Other
             </a>
           </div>
@@ -151,21 +159,12 @@ const Sidebar = () => {
         >
           <div className="bg-white py-2 collapse-inner rounded">
             <h6 className="collapse-header">Login Screens:</h6>
-            <a className="collapse-item" href="login">
-              Login
-            </a>
-            <a className="collapse-item" href="register">
-              Register
-            </a>
-            <a className="collapse-item" href="forgot-password.html">
-              Forgot Password
+            <a className="collapse-item" onClick={handleLogout}>
+              Logout
             </a>
             <div className="collapse-divider"></div>
             <h6 className="collapse-header">Other Pages:</h6>
-            <a className="collapse-item" href="404.html">
-              404 Page
-            </a>
-            <a className="collapse-item" href="blank.html">
+            <a className="collapse-item" href="#">
               Blank Page
             </a>
           </div>

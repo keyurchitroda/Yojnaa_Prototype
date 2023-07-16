@@ -1,6 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    setIsLoading(true);
+
+    const reqData = {
+      email: email,
+      password: password,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reqData),
+    };
+    fetch("http://15.206.117.255:8000/account/login/", requestOptions)
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.status === 1) {
+          setIsLoading(false);
+          localStorage.setItem("token", response.data.token);
+          // navigate("/");
+          window.location.href = "/";
+
+          toast(response.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } else {
+          setIsLoading(false);
+          toast.error(response.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      });
+  };
+
+  const getValidation = () => {
+    let isValid = false;
+    if (!email || !password) {
+      isValid = true;
+    }
+    return isValid;
+  };
+
   return (
     <div className="">
       <div className="container">
@@ -25,6 +88,8 @@ const Login = () => {
                             id="exampleInputEmail"
                             aria-describedby="emailHelp"
                             placeholder="Enter Email Address..."
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
                         <div className="form-group">
@@ -33,44 +98,22 @@ const Login = () => {
                             className="form-control form-control-user"
                             id="exampleInputPassword"
                             placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
-                        <div className="form-group">
-                          <div className="custom-control custom-checkbox small">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck"
-                            />
-                            <label
-                              className="custom-control-label"
-                              for="customCheck"
-                            >
-                              Remember Me
-                            </label>
-                          </div>
-                        </div>
                         <a
-                          href="index.html"
                           className="btn btn-primary btn-user btn-block"
+                          onClick={handleLogin}
+                          style={
+                            getValidation()
+                              ? { pointerEvents: "none", opacity: "0.5" }
+                              : {}
+                          }
                         >
-                          Login
+                          {isLoading ? "Loading..." : "Login"}
                         </a>
                         <hr />
-                        <a
-                          href="index.html"
-                          className="btn btn-google btn-user btn-block"
-                        >
-                          <i className="fab fa-google fa-fw"></i> Login with
-                          Google
-                        </a>
-                        <a
-                          href="index.html"
-                          className="btn btn-facebook btn-user btn-block"
-                        >
-                          <i className="fab fa-facebook-f fa-fw"></i> Login with
-                          Facebook
-                        </a>
                       </form>
                       <hr />
                       <div className="text-center">
@@ -79,7 +122,10 @@ const Login = () => {
                         </a>
                       </div>
                       <div className="text-center">
-                        <a className="small" href="register.html">
+                        <a
+                          className="small"
+                          onClick={() => navigate("/register")}
+                        >
                           Create an Account!
                         </a>
                       </div>
