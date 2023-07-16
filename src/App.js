@@ -19,8 +19,8 @@ function App() {
     createRoutesFromElements(
       <Route>
         <Route index element={<Layout />}></Route>
-        {/* <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Resgitser />}></Route> */}
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Resgitser />}></Route>
       </Route>
     )
   );
@@ -40,7 +40,7 @@ function App() {
       <div className="font-bodyFont">
         <ToastContainer />
 
-        <RouterProvider router={token ? router : router1} />
+        <RouterProvider router={router} />
       </div>
     </>
   );
