@@ -32,7 +32,7 @@ const Resgitser = () => {
 
     setIsLoading(true);
 
-    fetch("http://15.206.117.255:8000/account/signup/", requestOptions)
+    fetch("http://13.127.21.5:8000/account/signup/", requestOptions)
       .then((res) => res.json())
       .then((response) => {
         if (response.status === 1) {

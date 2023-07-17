@@ -21,7 +21,7 @@ const Login = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reqData),
     };
-    fetch("http://15.206.117.255:8000/account/login/", requestOptions)
+    fetch("http://13.127.21.5:8000/account/login/", requestOptions)
       .then((res) => res.json())
       .then((response) => {
         if (response.status === 1) {

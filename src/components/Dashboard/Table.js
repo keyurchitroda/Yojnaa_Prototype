@@ -1,6 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Pagination from "../pagination/Pagination";
 
 const Table = () => {
+  const [data, setData] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [currenPage, setCurrenPage] = useState(1);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(
+      `http://13.127.21.5:8000/schemesd/benificiary-records/?page=${currenPage}`,
+      requestOptions
+    )
+      .then((res) => res.json())
+      .then((response) => {
+        setData(response.data.results);
+        setTotalCount(response.data.count);
+      });
+  }, []);
+
+  const handlePageChange = (page) => {
+    console.log("page", page);
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(
+      `http://13.127.21.5:8000/schemesd/benificiary-records/?page=${page}`,
+      requestOptions
+    )
+      .then((res) => res.json())
+      .then((response) => {
+        setData(response.data.results);
+        setCurrenPage(page);
+      });
+  };
+
   return (
     <div class="container-fluid">
       <h1 class="h3 mb-2 text-gray-800">Tables</h1>
@@ -19,92 +57,53 @@ const Table = () => {
             >
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  <th>Benificiary First Name</th>
+                  <th>Benificiary Midle Name</th>
+                  <th>Benificiary SurName</th>
+                  <th>Scheme Name</th>
+                  <th>AC Name</th>
+                  <th>Year CD</th>
+                  <th>Village</th>
+                  <th>District</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
+                  <th>Benificiary First Name</th>
+                  <th>Benificiary Midle Name</th>
+                  <th>Benificiary SurName</th>
+                  <th>Scheme Name</th>
+                  <th>AC Name</th>
+                  <th>Year CD</th>
+                  <th>Village</th>
+                  <th>District</th>
                 </tr>
               </tfoot>
               <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                </tr>
-                <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>63</td>
-                  <td>2011/07/25</td>
-                  <td>$170,750</td>
-                </tr>
-                <tr>
-                  <td>Ashton Cox</td>
-                  <td>Junior Technical Author</td>
-                  <td>San Francisco</td>
-                  <td>66</td>
-                  <td>2009/01/12</td>
-                  <td>$86,000</td>
-                </tr>
-                <tr>
-                  <td>Cedric Kelly</td>
-                  <td>Senior Javascript Developer</td>
-                  <td>Edinburgh</td>
-                  <td>22</td>
-                  <td>2012/03/29</td>
-                  <td>$433,060</td>
-                </tr>
-                <tr>
-                  <td>Airi Satou</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>33</td>
-                  <td>2008/11/28</td>
-                  <td>$162,700</td>
-                </tr>
-                <tr>
-                  <td>Brielle Williamson</td>
-                  <td>Integration Specialist</td>
-                  <td>New York</td>
-                  <td>61</td>
-                  <td>2012/12/02</td>
-                  <td>$372,000</td>
-                </tr>
-                <tr>
-                  <td>Herrod Chandler</td>
-                  <td>Sales Assistant</td>
-                  <td>San Francisco</td>
-                  <td>59</td>
-                  <td>2012/08/06</td>
-                  <td>$137,500</td>
-                </tr>
-                <tr>
-                  <td>Rhona Davidson</td>
-                  <td>Integration Specialist</td>
-                  <td>Tokyo</td>
-                  <td>55</td>
-                  <td>2010/10/14</td>
-                  <td>$327,900</td>
-                </tr>
+                {data.map((items, index) => (
+                  <tr>
+                    <td>{items.benificiary_f_name}</td>
+                    <td>{items.benificiary_m_name}</td>
+                    <td>{items.benificiary_surname}</td>
+                    <td>{items.scheme_name}</td>
+                    <td>{items.ac_name}</td>
+                    <td>{items.year_cd}</td>
+                    <td>{items.village_name}</td>
+                    <td>{items.dist_name}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Pagination
+            className="pagination-bar"
+            currentPage={currenPage}
+            totalCount={totalCount}
+            pageSize={10}
+            onPageChange={(page) => handlePageChange(page)}
+          />
         </div>
       </div>
     </div>

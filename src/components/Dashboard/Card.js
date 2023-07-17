@@ -11,61 +11,13 @@ const Card = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    fetch("http://15.206.117.255:8000/schemesd/scheme-counts/", requestOptions)
+    fetch("http://13.127.21.5:8000/schemesd/scheme-counts/", requestOptions)
       .then((res) => res.json())
       .then((response) => {
         console.log(response);
         setArrayCard(response.data);
       });
   }, []);
-
-  // const arrayCard = [
-  //   {
-  //     id: "1",
-  //     title: "EARNINGS (MONTHLY)1",
-  //     count: 10,
-  //   },
-  //   {
-  //     id: "2",
-  //     title: "EARNINGS (MONTHLY)2",
-  //     count: 11,
-  //   },
-  //   {
-  //     id: "3",
-  //     title: "EARNINGS (MONTHLY)3",
-  //     count: 12,
-  //   },
-  //   {
-  //     id: "4",
-  //     title: "EARNINGS (MONTHLY)4",
-  //     count: 13,
-  //   },
-  //   {
-  //     id: "5",
-  //     title: "EARNINGS (MONTHLY)5",
-  //     count: 14,
-  //   },
-  //   {
-  //     id: "6",
-  //     title: "EARNINGS (MONTHLY)6",
-  //     count: 15,
-  //   },
-  //   {
-  //     id: "7",
-  //     title: "EARNINGS (MONTHLY)7",
-  //     count: 16,
-  //   },
-  //   {
-  //     id: "8",
-  //     title: "EARNINGS (MONTHLY)8",
-  //     count: 17,
-  //   },
-  //   {
-  //     id: "9",
-  //     title: "EARNINGS (MONTHLY)9",
-  //     count: 18,
-  //   },
-  // ];
 
   const cardsPerPage = 4;
   const totalSets = Math.ceil(arrayCard.length / cardsPerPage);
