@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../pagination/Pagination";
+import _ from "lodash";
 
 const Table = () => {
   const [data, setData] = useState([]);
@@ -39,13 +40,49 @@ const Table = () => {
       });
   };
 
+  const exportToCsv = (filename, rows) => {
+    // Get the headers from the first row of data
+    const headers = _.keys(data[0]);
+    // Create a CSV string from the array of rows
+    const csvContent = `data:text/csv;charset=utf-8,${_.join(
+      [
+        _.join(headers, ","),
+        ..._.map(data, (row) => _.join(_.values(row), ",")),
+      ],
+      "\n"
+    )}`;
+
+    // console
+    // Create a link element to download the CSV file
+    const link = document.createElement("a");
+    // Set the href attribute to the CSV string
+    link.setAttribute("href", encodeURI(csvContent));
+    // Set the download attribute to the specified filename
+    link.setAttribute("download", "table");
+    // Make the link hidden
+    link.style.visibility = "hidden";
+    // Append the link to the document body
+    document.body.appendChild(link);
+    // Simulate a click on the link to trigger the download
+    link.click();
+    // Remove the link from the document body
+    document.body.removeChild(link);
+  };
+
   return (
     <div class="container-fluid">
       <h1 class="h3 mb-2 text-gray-800">Tables</h1>
 
       <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          <a
+            onClick={exportToCsv}
+            className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+          >
+            <i className="fas fa-download fa-sm text-white-50"></i>
+            Export CSV
+          </a>
         </div>
         <div class="card-body">
           <div class="table-responsive">

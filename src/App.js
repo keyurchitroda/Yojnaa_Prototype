@@ -25,16 +25,6 @@ function App() {
     )
   );
 
-  const router1 = createBrowserRouter(
-    createRoutesFromElements(
-      <Route>
-        {/* <Route index element={<Layout />}></Route> */}
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Resgitser />}></Route>
-      </Route>
-    )
-  );
-
   return (
     <>
       <div className="font-bodyFont">
