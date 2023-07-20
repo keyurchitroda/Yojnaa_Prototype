@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
