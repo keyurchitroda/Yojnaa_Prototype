@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from "react";
-import Pagination from "../pagination/Pagination";
-import _ from "lodash";
 import { API_URL } from "../config";
+import Pagination from "../pagination/Pagination";
 import { RotatingTriangles } from "react-loader-spinner";
 
-const Table = () => {
+const CardDetailsTable = () => {
   const [data, setData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currenPage, setCurrenPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  const url = window.location.href;
+
+  // Create a URLSearchParams object from the URL
+  const params = new URLSearchParams(new URL(url).search);
+
+  // Get the iterator for the key-value pairs
+  const iterator = params.entries();
+
+  // Get the first key-value pair (assuming there's only one)
+  const { value } = iterator.next();
+
+  // Extract the key and value
+  const [key, val] = value;
+
   useEffect(() => {
     setLoading(true);
-
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    fetch(
-      `${API_URL}/schemesd/benificiary-records/?page=${currenPage}`,
-      requestOptions
-    )
+    let apiUrl = `${API_URL}/schemesd/benificiary-records/?${key}=${decodeURI(
+      val
+    )}&page=${currenPage}`;
+
+    fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
@@ -35,46 +48,17 @@ const Table = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    fetch(
-      `${API_URL}/schemesd/benificiary-records/?page=${page}`,
-      requestOptions
-    )
+    let apiUrl = `${API_URL}/schemesd/benificiary-records/?${key}=${decodeURI(
+      val
+    )}&page=${page}`;
+
+    fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
-
         setData(response.data.results);
         setCurrenPage(page);
       });
-  };
-
-  const exportToCsv = (filename, rows) => {
-    // Get the headers from the first row of data
-    const headers = _.keys(data[0]);
-    // Create a CSV string from the array of rows
-    const csvContent = `data:text/csv;charset=utf-8,${_.join(
-      [
-        _.join(headers, ","),
-        ..._.map(data, (row) => _.join(_.values(row), ",")),
-      ],
-      "\n"
-    )}`;
-
-    // console
-    // Create a link element to download the CSV file
-    const link = document.createElement("a");
-    // Set the href attribute to the CSV string
-    link.setAttribute("href", encodeURI(csvContent));
-    // Set the download attribute to the specified filename
-    link.setAttribute("download", "table");
-    // Make the link hidden
-    link.style.visibility = "hidden";
-    // Append the link to the document body
-    document.body.appendChild(link);
-    // Simulate a click on the link to trigger the download
-    link.click();
-    // Remove the link from the document body
-    document.body.removeChild(link);
   };
 
   return (
@@ -84,13 +68,6 @@ const Table = () => {
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-          <a
-            onClick={exportToCsv}
-            className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-          >
-            <i className="fas fa-download fa-sm text-white-50"></i>
-            Export CSV
-          </a>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -174,4 +151,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default CardDetailsTable;

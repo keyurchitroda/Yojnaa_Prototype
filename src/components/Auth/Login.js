@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_URL } from "../config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ const Login = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reqData),
     };
-    fetch("http://13.127.21.5:8000/account/login/", requestOptions)
+    fetch(`${API_URL}/account/login/`, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         if (response.status === 1) {

@@ -30,13 +30,13 @@ const Sidebar = () => {
       {/*  <!-- Sidebar - Brand --> */}
       <a
         className="sidebar-brand d-flex align-items-center justify-content-center"
-        href="#"
+        href="/"
       >
         <div className="sidebar-brand-icon rotate-n-15">
           <i className="fas fa-laugh-wink"></i>
         </div>
         <div className="sidebar-brand-text mx-3">
-          SB Admin <sup>2</sup>
+          YOJNA <sup>2</sup>
         </div>
         <div className="text-center d-none d-md-inline">
           <button
@@ -52,7 +52,7 @@ const Sidebar = () => {
 
       {/*  <!-- Nav Item - Dashboard --> */}
       <li className="nav-item active">
-        <a className="nav-link" href="index.html">
+        <a className="nav-link" href="/">
           <i className="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>

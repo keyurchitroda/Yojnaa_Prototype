@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API_URL } from "../config";
 
 const Resgitser = () => {
   const [firstName, setFirstName] = useState("");
@@ -32,7 +33,7 @@ const Resgitser = () => {
 
     setIsLoading(true);
 
-    fetch("http://13.127.21.5:8000/account/signup/", requestOptions)
+    fetch(`${API_URL}/account/signup/`, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         if (response.status === 1) {
@@ -108,7 +109,7 @@ const Resgitser = () => {
     };
 
     setIsLoading(true);
-    fetch("http://13.127.21.5:8000/account/verify-otp/", requestOptions)
+    fetch(`${API_URL}/account/verify-otp/`, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         if (response.status === 1) {

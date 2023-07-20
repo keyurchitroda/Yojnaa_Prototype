@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import CardDetails from "./components/CardDetails/CardDetails";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -21,6 +22,7 @@ function App() {
         <Route index element={<Layout />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Resgitser />}></Route>
+        <Route path="/details" element={<CardDetails />}></Route>
       </Route>
     )
   );
