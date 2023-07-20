@@ -8,10 +8,7 @@ import "./styles/style.css";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Auth/Login";
 import Resgitser from "./components/Auth/Resgitser";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "react-toastify/dist/ReactToastify.css";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+
 import { ToastContainer } from "react-toastify";
 import CardDetails from "./components/CardDetails/CardDetails";
 

@@ -5,6 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/style.css";
 import "./components/pagination/Page.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "react-toastify/dist/ReactToastify.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
