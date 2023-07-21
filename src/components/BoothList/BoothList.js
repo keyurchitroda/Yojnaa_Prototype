@@ -1,10 +1,8 @@
 import React from "react";
-import { Navbar } from "../Layout/Navbar";
 import Sidebar from "../Layout/Sidebar";
-import CardDetailsTable from "./CardDetailsTable";
-import BoothListCards from "../BoothList/BoothListCards";
+import BoothListCards from "./BoothListCards";
 
-function CardDetails() {
+const BoothList = () => {
   return (
     <div>
       <body id="page-top">
@@ -15,6 +13,6 @@ function CardDetails() {
       </body>
     </div>
   );
-}
+};
 
-export default CardDetails;
+export default BoothList;

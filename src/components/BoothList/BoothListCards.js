@@ -1,79 +1,58 @@
 import React, { useEffect, useState } from "react";
-
+import { RotatingTriangles } from "react-loader-spinner";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
-import { RotatingTriangles } from "react-loader-spinner";
-// import Carousel from "react-multi-carousel";
 
-const Card = () => {
-  const [arrayCard, setArrayCard] = useState([]);
-  const [arrayCard2, setArrayCard2] = useState([]);
-  const [cardLoding1, setcardLoading1] = useState(false);
-  const [cardLoding2, setcardLoading2] = useState(false);
+const BoothListCards = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const url = window.location.href;
+
+  // Create a URLSearchParams object from the URL
+  const params = new URLSearchParams(new URL(url).search);
+
+  // Get the iterator for the key-value pairs
+  const iterator = params.entries();
+
+  // Get the first key-value pair (assuming there's only one)
+  const { value } = iterator.next();
+
+  // Extract the key and value
+  const [key, val] = value;
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   setcardLoading1(true);
-  //   const requestOptions = {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   };
-  //   fetch(`${API_URL}/schemesd/scheme-counts/`, requestOptions)
-  //     .then((res) => res.json())
-  //     .then((response) => {
-  //       setcardLoading1(false);
-  //       setArrayCard(response.data);
-  //     });
-  // }, []);
-
   useEffect(() => {
-    setcardLoading2(true);
+    setLoading(true);
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    fetch(`${API_URL}/schemesd/boothlistbypcno/`, requestOptions)
+    let apiUrl = `${API_URL}/schemesd/boothlistbyacno/${val}/`;
+
+    fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
-        setcardLoading2(false);
-
-        setArrayCard2(response);
+        setLoading(false);
+        setData(response);
       });
   }, []);
 
   const handleNavigateDetails = (item, query) => {
-    navigate(`/boothlist?${query}=${item.ac_no}`);
+    if (query == "scheme_name") {
+      navigate(`/details?${query}=${item.scheme_name}`);
+    } else {
+      navigate(`/details?${query}=${item.ac_no}`);
+    }
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div className="row">
-        <div className="col-xl-3 col-md-6 mb-4">
-          <div className="card border-left-success shadow h-100 py-2">
-            <div className="card-body">
-              <div className="row no-gutters align-items-center">
-                <div className="col mr-2">
-                  <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                    Parliament No: - 6
-                  </div>
-                  <div className="h5 mb-0 font-weight-bold text-gray-800">
-                    Gandhinagar
-                  </div>
-                </div>
-                {/* <div className="col-auto">
-                  <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                </div> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* ------------ */}
       <div>
         <h1 className="h3 mb-2 text-gray-800">Ac Name</h1>
 
-        {cardLoding2 ? (
+        {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <RotatingTriangles
               visible={true}
@@ -86,8 +65,8 @@ const Card = () => {
           </div>
         ) : (
           <div className="row">
-            {arrayCard2.length > 0 &&
-              arrayCard2.map((item, index) => (
+            {data.length > 0 &&
+              data.map((item, index) => (
                 <div
                   key={item.id}
                   className="col-xl-3 col-md-6 mb-4"
@@ -119,4 +98,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default BoothListCards;

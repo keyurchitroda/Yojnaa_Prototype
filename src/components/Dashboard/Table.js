@@ -165,15 +165,18 @@ const Table = () => {
               </tbody>
             </table>
           </div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Pagination
-            className="pagination-bar"
-            currentPage={currenPage}
-            totalCount={totalCount}
-            pageSize={10}
-            onPageChange={(page) => handlePageChange(page)}
-          />
+          <div
+            class="table-responsive"
+            // style={{ display: "flex", justifyContent: "center" }}
+          >
+            <Pagination
+              className="pagination-bar"
+              currentPage={currenPage}
+              totalCount={totalCount}
+              pageSize={10}
+              onPageChange={(page) => handlePageChange(page)}
+            />
+          </div>
         </div>
       </div>
     </div>
