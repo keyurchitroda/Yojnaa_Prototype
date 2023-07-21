@@ -8,12 +8,12 @@ import "./styles/style.css";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Auth/Login";
 import Resgitser from "./components/Auth/Resgitser";
-
 import { ToastContainer } from "react-toastify";
 import CardDetails from "./components/CardDetails/CardDetails";
 
 function App() {
   const token = localStorage.getItem("token");
+  console.log("app-=-=-=-=-", window.location.href);
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>

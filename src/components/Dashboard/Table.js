@@ -102,6 +102,8 @@ const Table = () => {
             >
               <thead>
                 <tr>
+                  <th>idcard_no</th>
+                  <th>booth_no</th>
                   <th>Benificiary First Name</th>
                   <th>Benificiary Midle Name</th>
                   <th>Benificiary SurName</th>
@@ -114,6 +116,8 @@ const Table = () => {
               </thead>
               <tfoot>
                 <tr>
+                  <th>idcard_no</th>
+                  <th>booth_no</th>
                   <th>Benificiary First Name</th>
                   <th>Benificiary Midle Name</th>
                   <th>Benificiary SurName</th>
@@ -145,6 +149,8 @@ const Table = () => {
                 ) : (
                   data.map((items, index) => (
                     <tr>
+                      <td>{items.idcard_no}</td>
+                      <td>{items.booth_no ? items.booth_no : "N/A"}</td>
                       <td>{items.benificiary_f_name}</td>
                       <td>{items.benificiary_m_name}</td>
                       <td>{items.benificiary_surname}</td>

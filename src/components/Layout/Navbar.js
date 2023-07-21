@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Sidebar from "./Sidebar";
 
 export const Navbar = () => {
   const [style, setStyle] = useState(
@@ -46,15 +47,41 @@ export const Navbar = () => {
     }
   };
 
-  const changeStyle1 = () => {
+  // const changeStyle = () => {
+  //   console.log("style-=-=-", style);
+  //   if (
+  //     style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+  //   ) {
+  //     setStyle(
+  //       "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
+  //     );
+  //   } else {
+  //     setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
+  //   }
+  // };
+
+  const changeStyle = () => {
     if (
-      style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      // style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      localStorage.getItem("styleToggle") ==
+      "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
     ) {
+      localStorage.removeItem("styleToggle");
       setStyle(
-        "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled1"
+        "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
+      );
+      localStorage.setItem(
+        "styleToggle",
+        "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
       );
     } else {
+      localStorage.removeItem("styleToggle");
+
       setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
+      localStorage.setItem(
+        "styleToggle",
+        "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      );
     }
   };
 
@@ -112,168 +139,170 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-      {/*  <!-- Sidebar Toggle (Topbar) --> */}
-      <button
-        id="sidebarToggleTop"
-        className="btn btn-link d-md-none rounded-circle mr-3"
-        onClick={changeStyle1}
-      >
-        <i className="fa fa-bars"></i>
-      </button>
+    <>
+      <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        {/*  <!-- Sidebar Toggle (Topbar) --> */}
+        <button
+          id="sidebarToggleTop"
+          className="btn btn-link d-md-none rounded-circle mr-3"
+          onClick={changeStyle}
+        >
+          <i className="fa fa-bars"></i>
+        </button>
 
-      {/*  <!-- Topbar Search --> */}
-      <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div className="input-group">
-          <input
-            type="text"
-            className="form-control bg-light border-0 small"
-            placeholder="Search for..."
-            aria-label="Search"
-            aria-describedby="basic-addon2"
-          />
-          <div className="input-group-append">
-            <button className="btn btn-primary" type="button">
-              <i className="fas fa-search fa-sm"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-
-      <a
-        onClick={handleButtonClick}
-        className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-      >
-        <i className="fas fa-plus fa-sm text-white-50"></i>
-        Import Sheet
-      </a>
-
-      {isModalOpen && (
-        <div className="modal fade show" style={{ display: "block" }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Sheet Upload</h5>
-                <button
-                  type="button"
-                  className="close"
-                  onClick={handleCloseModal}
-                >
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label htmlFor="imageUpload">Select Sheet:</label>
-                  <input
-                    type="file"
-                    className="form-control-file"
-                    id="imageUpload"
-                    accept=".xlsx"
-                    onChange={handleImageChange}
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCloseModal}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleImportSheet}
-                >
-                  Upload
-                </button>
-              </div>
+        {/*  <!-- Topbar Search --> */}
+        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control bg-light border-0 small"
+              placeholder="Search for..."
+              aria-label="Search"
+              aria-describedby="basic-addon2"
+            />
+            <div className="input-group-append">
+              <button className="btn btn-primary" type="button">
+                <i className="fas fa-search fa-sm"></i>
+              </button>
             </div>
           </div>
-        </div>
-      )}
+        </form>
 
-      {/*  <!-- Topbar Navbar --> */}
-      <ul className="navbar-nav ml-auto">
-        {/*  <!-- Nav Item - Search Dropdown (Visible Only XS) --> */}
-        <li className="nav-item dropdown no-arrow d-sm-none">
-          <a
-            className="nav-link dropdown-toggle"
-            href="#"
-            id="searchDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <i className="fas fa-search fa-fw"></i>
-          </a>
-          {/*   <!-- Dropdown - Messages --> */}
-          <div
-            className="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-            aria-labelledby="searchDropdown"
-          >
-            <form className="form-inline mr-auto w-100 navbar-search">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control bg-light border-0 small"
-                  placeholder="Search for..."
-                  aria-label="Search"
-                  aria-describedby="basic-addon2"
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-primary" type="button">
-                    <i className="fas fa-search fa-sm"></i>
+        <a
+          onClick={handleButtonClick}
+          className="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+        >
+          <i className="fas fa-plus fa-sm text-white-50"></i>
+          Import Sheet
+        </a>
+
+        {isModalOpen && (
+          <div className="modal fade show" style={{ display: "block" }}>
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Sheet Upload</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={handleCloseModal}
+                  >
+                    <span>&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <div className="form-group">
+                    <label htmlFor="imageUpload">Select Sheet:</label>
+                    <input
+                      type="file"
+                      className="form-control-file"
+                      id="imageUpload"
+                      accept=".xlsx"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleCloseModal}
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleImportSheet}
+                  >
+                    Upload
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
-        </li>
+        )}
 
-        <div className="topbar-divider d-none d-sm-block"></div>
-
-        {/* <!-- Nav Item - User Information --> */}
-        <li className="nav-item dropdown no-arrow">
-          <a
-            className="nav-link dropdown-toggle"
-            href="#"
-            id="userDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-              Douglas McGee
-            </span>
-            <img
-              className="img-profile rounded-circle"
-              src="img/undraw_profile.svg"
-            />
-          </a>
-          {/*  <!-- Dropdown - User Information --> */}
-          <div
-            className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-            aria-labelledby="userDropdown"
-          >
-            <div className="dropdown-divider"></div>
+        {/*  <!-- Topbar Navbar --> */}
+        <ul className="navbar-nav ml-auto">
+          {/*  <!-- Nav Item - Search Dropdown (Visible Only XS) --> */}
+          <li className="nav-item dropdown no-arrow d-sm-none">
             <a
-              className="dropdown-item"
+              className="nav-link dropdown-toggle"
               href="#"
-              data-toggle="modal"
-              data-target="#logoutModal"
-              onClick={handleLogout}
+              id="searchDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
             >
-              <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-              Logout
+              <i className="fas fa-search fa-fw"></i>
             </a>
-          </div>
-        </li>
-      </ul>
-    </nav>
+            {/*   <!-- Dropdown - Messages --> */}
+            <div
+              className="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+              aria-labelledby="searchDropdown"
+            >
+              <form className="form-inline mr-auto w-100 navbar-search">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control bg-light border-0 small"
+                    placeholder="Search for..."
+                    aria-label="Search"
+                    aria-describedby="basic-addon2"
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-primary" type="button">
+                      <i className="fas fa-search fa-sm"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+
+          <div className="topbar-divider d-none d-sm-block"></div>
+
+          {/* <!-- Nav Item - User Information --> */}
+          <li className="nav-item dropdown no-arrow">
+            <a
+              className="nav-link dropdown-toggle"
+              href="#"
+              id="userDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <span className="mr-2 d-none d-lg-inline text-gray-600 small">
+                User
+              </span>
+              <img
+                className="img-profile rounded-circle"
+                src="img/undraw_profile.svg"
+              />
+            </a>
+            {/*  <!-- Dropdown - User Information --> */}
+            <div
+              className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+              aria-labelledby="userDropdown"
+            >
+              <div className="dropdown-divider"></div>
+              <a
+                className="dropdown-item"
+                href="#"
+                data-toggle="modal"
+                data-target="#logoutModal"
+                onClick={handleLogout}
+              >
+                <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </>
   );
 };

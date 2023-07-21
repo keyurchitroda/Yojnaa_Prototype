@@ -5,24 +5,33 @@ import CardDetailsTable from "./CardDetailsTable";
 
 function CardDetails() {
   return (
-    <div id="wrapper">
-      <Sidebar />
-      <div id="content-wrapper" className="d-flex flex-column">
-        <div id="content">
-          <Navbar />
-          <CardDetailsTable />
-        </div>
+    // <div id="wrapper">
+    //   <Sidebar />
 
-        {/* //  Footer  */}
-        <footer className="sticky-footer bg-white">
-          <div className="container my-auto">
-            <div className="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2023</span>
-            </div>
-          </div>
-        </footer>
-        {/* <!-- End of Footer --> */}
-      </div>
+    //   <div id="content-wrapper" className="d-flex flex-column">
+    //     <div id="content">
+    //       <Navbar />
+    //       <CardDetailsTable />
+    //     </div>
+
+    //     {/* //  Footer  */}
+    //     <footer className="sticky-footer bg-white">
+    //       <div className="container my-auto">
+    //         <div className="copyright text-center my-auto">
+    //           <span>Copyright &copy; Your Website 2023</span>
+    //         </div>
+    //       </div>
+    //     </footer>
+    //     {/* <!-- End of Footer --> */}
+    //   </div>
+    // </div>
+    <div>
+      <body id="page-top">
+        <div id="wrapper">
+          <Sidebar componentName={<CardDetailsTable />} />
+          {/* <Header /> */}
+        </div>
+      </body>
     </div>
   );
 }

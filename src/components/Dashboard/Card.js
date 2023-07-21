@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { Carousel } from "react-responsive-carousel";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { RotatingTriangles } from "react-loader-spinner";
+// import Carousel from "react-multi-carousel";
 
 const Card = () => {
   const [arrayCard, setArrayCard] = useState([]);
@@ -42,36 +42,6 @@ const Card = () => {
       });
   }, []);
 
-  const cardsPerPage = 4;
-  const totalSets = Math.ceil(arrayCard.length / cardsPerPage);
-
-  const [currentSet, setCurrentSet] = useState(0);
-
-  const handleCarouselChange = (index) => {
-    setCurrentSet(index);
-  };
-
-  const getVisibleCards = () => {
-    const startIndex = currentSet * cardsPerPage;
-    const endIndex = startIndex + cardsPerPage;
-    return arrayCard.slice(startIndex, endIndex);
-  };
-
-  const cardsPerPage2 = 4;
-  const totalSets2 = Math.ceil(arrayCard2.length / cardsPerPage2);
-
-  const [currentSet2, setCurrentSet2] = useState(0);
-
-  const handleCarouselChange2 = (index) => {
-    setCurrentSet2(index);
-  };
-
-  const getVisibleCards2 = () => {
-    const startIndex = currentSet2 * cardsPerPage2;
-    const endIndex = startIndex + cardsPerPage2;
-    return arrayCard2.slice(startIndex, endIndex);
-  };
-
   const handleNavigateDetails = (item, query) => {
     if (query == "scheme_name") {
       navigate(`/details?${query}=${item.scheme_name}`);
@@ -82,7 +52,8 @@ const Card = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div>
+      {/* <div>
+        <h1 className="h3 mb-2 text-gray-800">Scheams</h1>
         {cardLoding1 ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <RotatingTriangles
@@ -95,47 +66,62 @@ const Card = () => {
             />
           </div>
         ) : (
-          <Carousel
-            showArrows={true}
-            autoFocus={true}
-            emulateTouch={true}
-            infiniteLoop={true}
-            onChange={handleCarouselChange}
-            transitionTime={1000}
-          >
-            {[...Array(totalSets)].map((_, setIndex) => (
-              <div key={setIndex} className="row">
-                {getVisibleCards().map((item, index) => (
-                  <div
-                    key={item.id}
-                    className="col-xl-3 col-md-6 mb-4"
-                    onClick={() => handleNavigateDetails(item, "scheme_name")}
-                  >
-                    <div className="card border-left-success shadow h-100 py-2">
-                      <div className="card-body">
-                        <div className="row no-gutters align-items-center">
-                          <div className="col mr-2">
-                            <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                              {item.scheme_name}
-                            </div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              {item.total_beneficiary}
-                            </div>
+          <>
+            <div className="row">
+              {arrayCard.map((item, index) => (
+                <div
+                  key={item.id}
+                  className="col-xl-3 col-md-6 mb-4"
+                  onClick={() => handleNavigateDetails(item, "scheme_name")}
+                >
+                  <div className="card border-left-success shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row no-gutters align-items-center">
+                        <div className="col mr-2">
+                          <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            {item.scheme_name}
                           </div>
-                          <div className="col-auto">
-                            <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                            {item.total_beneficiary}
                           </div>
+                        </div>
+                        <div className="col-auto">
+                          <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            ))}
-          </Carousel>
+                </div>
+              ))}
+            </div>
+          </>
         )}
+      </div> */}
+      <div className="row">
+        <div className="col-xl-3 col-md-6 mb-4">
+          <div className="card border-left-success shadow h-100 py-2">
+            <div className="card-body">
+              <div className="row no-gutters align-items-center">
+                <div className="col mr-2">
+                  <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                    Parliament No: - 6
+                  </div>
+                  <div className="h5 mb-0 font-weight-bold text-gray-800">
+                    Gandhinagar
+                  </div>
+                </div>
+                {/* <div className="col-auto">
+                  <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                </div> */}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      {/* ------------ */}
       <div>
+        <h1 className="h3 mb-2 text-gray-800">Ac Name</h1>
+
         {cardLoding2 ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <RotatingTriangles
@@ -148,44 +134,33 @@ const Card = () => {
             />
           </div>
         ) : (
-          <Carousel
-            showArrows={true}
-            autoFocus={true}
-            emulateTouch={true}
-            infiniteLoop={true}
-            onChange={handleCarouselChange2}
-            transitionTime={1000}
-          >
-            {[...Array(totalSets2)].map((_, setIndex) => (
-              <div key={setIndex} className="row">
-                {getVisibleCards2().map((item, index) => (
-                  <div
-                    key={item.id}
-                    className="col-xl-3 col-md-6 mb-4"
-                    onClick={() => handleNavigateDetails(item, "ac_name")}
-                  >
-                    <div className="card border-left-success shadow h-100 py-2">
-                      <div className="card-body">
-                        <div className="row no-gutters align-items-center">
-                          <div className="col mr-2">
-                            <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                              {item.ac_name}
-                            </div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              {item.total_beneficiary}
-                            </div>
-                          </div>
-                          <div className="col-auto">
-                            <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                          </div>
+          <div className="row">
+            {arrayCard2.map((item, index) => (
+              <div
+                key={item.id}
+                className="col-xl-3 col-md-6 mb-4"
+                onClick={() => handleNavigateDetails(item, "ac_name")}
+              >
+                <div className="card border-left-success shadow h-100 py-2">
+                  <div className="card-body">
+                    <div className="row no-gutters align-items-center">
+                      <div className="col mr-2">
+                        <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                          {item.ac_name}
                         </div>
+                        <div className="h5 mb-0 font-weight-bold text-gray-800">
+                          {item.total_beneficiary}
+                        </div>
+                      </div>
+                      <div className="col-auto">
+                        <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
             ))}
-          </Carousel>
+          </div>
         )}
       </div>
     </div>
