@@ -55,6 +55,7 @@ const Pagination = (props) => {
               selected: pageNumber === currentPage,
             })}
             onClick={() => onPageChange(pageNumber)}
+            style={{ padding: "10px" }}
           >
             {pageNumber}
           </li>
@@ -66,7 +67,9 @@ const Pagination = (props) => {
         })}
         onClick={onNext}
       >
-        <div className="arrow right" />
+        <div className="">
+          <i class="bi bi-arrow-right-square-fill"></i>
+        </div>
       </li>
     </ul>
   );
