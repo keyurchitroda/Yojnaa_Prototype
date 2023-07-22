@@ -54,11 +54,19 @@ const BoothListCards = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {cardDetails.ac_no} - {cardDetails.eng_ac_name} (
+            {cardDetails.ac_name})
+          </li>
+        </ol>
+      </nav>
       <div>
-        <h1 className="h3 mb-2 text-gray-800">
-          Booth List - {cardDetails.ac_no} - {cardDetails.eng_ac_name} (
-          {cardDetails.ac_name})
-        </h1>
+        <h1 className="h3 mb-2 text-gray-800">Booth List</h1>
 
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>

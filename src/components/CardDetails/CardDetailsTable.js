@@ -18,6 +18,14 @@ const CardDetailsTable = () => {
     (state) => state.reducer.cardsDetails.scheme_details
   );
 
+  const cardBoothDetails = useSelector(
+    (state) => state.reducer.cardsDetails.booth_details
+  );
+
+  const cardACDetails = useSelector(
+    (state) => state.reducer.cardsDetails.ac_details
+  );
+
   const entries = Object.entries(singleData);
 
   const keysToShow = [
@@ -129,6 +137,29 @@ const CardDetailsTable = () => {
 
   return (
     <div class="container-fluid">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">
+            <a href={`/boothlist?ac_no=${cardACDetails.ac_no}`}>
+              {cardACDetails.ac_no} - {cardACDetails.eng_ac_name} (
+              {cardACDetails.ac_name})
+            </a>
+          </li>
+          <li class="breadcrumb-item active">
+            <a href={`/schemelist?booth_no=${cardBoothDetails.booth_no}`}>
+              {cardBoothDetails.booth_no} - {cardBoothDetails.eng_booth_name} (
+              {cardBoothDetails.booth_name})
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {cardDetails.scheme_name} ({cardDetails.total_beneficiary})
+          </li>
+        </ol>
+      </nav>
+
       <h1 class="h3 mb-2 text-gray-800">
         {cardDetails.scheme_name} ({cardDetails.total_beneficiary})
       </h1>
@@ -149,32 +180,34 @@ const CardDetailsTable = () => {
             >
               <thead>
                 <tr>
-                  <th>idcard_no</th>
-                  <th>booth_no</th>
-                  <th>Benificiary First Name</th>
-                  <th>Benificiary Midle Name</th>
-                  <th>Benificiary SurName</th>
-                  <th>Scheme Name</th>
                   <th>AC Name</th>
-                  <th>Year CD</th>
+                  <th>Booth No</th>
+                  <th>Idcard No</th>
+                  <th>Name</th>
+                  <th>Mobile No</th>
+                  <th>Address</th>
                   <th>Village</th>
+                  <th>Taluka</th>
                   <th>District</th>
-                  <th>View</th>
+                  <th>Pincode</th>
+                  <th>Scheme Name</th>
+                  <th>Benefit Details</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>idcard_no</th>
-                  <th>booth_no</th>
-                  <th>Benificiary First Name</th>
-                  <th>Benificiary Midle Name</th>
-                  <th>Benificiary SurName</th>
-                  <th>Scheme Name</th>
                   <th>AC Name</th>
-                  <th>Year CD</th>
+                  <th>Booth No</th>
+                  <th>Idcard No</th>
+                  <th>Name</th>
+                  <th>Mobile No</th>
+                  <th>Address</th>
                   <th>Village</th>
+                  <th>Taluka</th>
                   <th>District</th>
-                  <th>View</th>
+                  <th>Pincode</th>
+                  <th>Scheme Name</th>
+                  <th>Benefit Details</th>
                 </tr>
               </tfoot>
               <tbody>
@@ -198,23 +231,19 @@ const CardDetailsTable = () => {
                 ) : (
                   data.map((items, index) => (
                     <tr>
-                      <td>{items.idcard_no}</td>
-                      <td>{items.booth_no ? items.booth_no : "N/A"}</td>
-                      <td>{items.benificiary_f_name}</td>
-                      <td>{items.benificiary_m_name}</td>
-                      <td>{items.benificiary_surname}</td>
-                      <td>{items.scheme_name}</td>
-                      <td>{items.ac_name}</td>
-                      <td>{items.year_cd}</td>
-                      <td>{items.village_name}</td>
-                      <td>{items.dist_name}</td>
+                      <td>{items.ac_name ? items.ac_name : "N/A"}</td>
+                      <td>{items.booth_no_new ? items.booth_no_new : "N/A"}</td>
+                      <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
+                      <td>{items.Name ? items.Name : "N/A"}</td>
+                      <td>{items.mobile_no ? items.mobile_no : "N/A"}</td>
+                      <td>{items.Address ? items.Address : "N/A"}</td>
+                      <td>{items.village_name ? items.village_name : "N/A"}</td>
+                      <td>{items.taluka_name ? items.taluka_name : "N/A"}</td>
+                      <td>{items.dist_name ? items.dist_name : "N/A"}</td>
+                      <td>{items.pincode ? items.pincode : "N/A"}</td>
+                      <td>{items.scheme_name ? items.scheme_name : "N/A"}</td>
                       <td>
-                        <button
-                          type="button"
-                          onClick={() => handleViewClick(items.id)}
-                        >
-                          View
-                        </button>
+                        {items.benifit_detail ? items.benifit_detail : "N/A"}
                       </td>
                     </tr>
                   ))

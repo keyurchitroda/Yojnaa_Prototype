@@ -14,6 +14,10 @@ const SchemeListCards = () => {
     (state) => state.reducer.cardsDetails.booth_details
   );
 
+  const cardACDetails = useSelector(
+    (state) => state.reducer.cardsDetails.ac_details
+  );
+
   const url = window.location.href;
 
   // Create a URLSearchParams object from the URL
@@ -58,11 +62,26 @@ const SchemeListCards = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">
+            <a href={`/boothlist?ac_no=${cardACDetails.ac_no}`}>
+              {" "}
+              {cardACDetails.ac_no} - {cardACDetails.eng_ac_name} (
+              {cardACDetails.ac_name})
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            {cardDetails.booth_no} - {cardDetails.eng_booth_name} (
+            {cardDetails.booth_name})
+          </li>
+        </ol>
+      </nav>
       <div>
-        <h1 className="h3 mb-2 text-gray-800">
-          Scheme List - {cardDetails.booth_no} - {cardDetails.eng_booth_name} (
-          {cardDetails.booth_name})
-        </h1>
+        <h1 className="h3 mb-2 text-gray-800">Scheme List</h1>
 
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>

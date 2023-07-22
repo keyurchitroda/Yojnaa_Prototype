@@ -102,30 +102,34 @@ const Table = () => {
             >
               <thead>
                 <tr>
-                  <th>idcard_no</th>
-                  <th>booth_no</th>
-                  <th>Benificiary First Name</th>
-                  <th>Benificiary Midle Name</th>
-                  <th>Benificiary SurName</th>
-                  <th>Scheme Name</th>
                   <th>AC Name</th>
-                  <th>Year CD</th>
+                  <th>Booth No</th>
+                  <th>Idcard No</th>
+                  <th>Name</th>
+                  <th>Mobile No</th>
+                  <th>Address</th>
                   <th>Village</th>
+                  <th>Taluka</th>
                   <th>District</th>
+                  <th>Pincode</th>
+                  <th>Scheme Name</th>
+                  <th>Benefit Details</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>idcard_no</th>
-                  <th>booth_no</th>
-                  <th>Benificiary First Name</th>
-                  <th>Benificiary Midle Name</th>
-                  <th>Benificiary SurName</th>
-                  <th>Scheme Name</th>
                   <th>AC Name</th>
-                  <th>Year CD</th>
+                  <th>Booth No</th>
+                  <th>Idcard No</th>
+                  <th>Name</th>
+                  <th>Mobile No</th>
+                  <th>Address</th>
                   <th>Village</th>
+                  <th>Taluka</th>
                   <th>District</th>
+                  <th>Pincode</th>
+                  <th>Scheme Name</th>
+                  <th>Benefit Details</th>
                 </tr>
               </tfoot>
               <tbody>
@@ -149,16 +153,20 @@ const Table = () => {
                 ) : (
                   data.map((items, index) => (
                     <tr>
+                      <td>{items.ac_name ? items.ac_name : "N/A"}</td>
+                      <td>{items.booth_no_new ? items.booth_no_new : "N/A"}</td>
                       <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
-                      <td>{items.booth_no ? items.booth_no : "N/A"}</td>
-                      <td>{items.benificiary_f_name}</td>
-                      <td>{items.benificiary_m_name}</td>
-                      <td>{items.benificiary_surname}</td>
-                      <td>{items.scheme_name}</td>
-                      <td>{items.ac_name}</td>
-                      <td>{items.year_cd}</td>
-                      <td>{items.village_name}</td>
-                      <td>{items.dist_name}</td>
+                      <td>{items.Name ? items.Name : "N/A"}</td>
+                      <td>{items.mobile_no ? items.mobile_no : "N/A"}</td>
+                      <td>{items.Address ? items.Address : "N/A"}</td>
+                      <td>{items.village_name ? items.village_name : "N/A"}</td>
+                      <td>{items.taluka_name ? items.taluka_name : "N/A"}</td>
+                      <td>{items.dist_name ? items.dist_name : "N/A"}</td>
+                      <td>{items.pincode ? items.pincode : "N/A"}</td>
+                      <td>{items.scheme_name ? items.scheme_name : "N/A"}</td>
+                      <td>
+                        {items.benifit_detail ? items.benifit_detail : "N/A"}
+                      </td>
                     </tr>
                   ))
                 )}
