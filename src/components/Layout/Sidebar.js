@@ -188,6 +188,10 @@ const Sidebar = ({ componentName }) => {
               <a className="collapse-item" onClick={handleLogout}>
                 Logout
               </a>
+              <h6 className="collapse-header">Yojna Forms Screen:</h6>
+              <a className="collapse-item" href="/yojnaform">
+                Yojna Forms
+              </a>
             </div>
           </div>
         </li>

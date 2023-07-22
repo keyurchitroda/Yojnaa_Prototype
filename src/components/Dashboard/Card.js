@@ -71,7 +71,7 @@ const Card = () => {
       </div>
       {/* ------------ */}
       <div>
-        <h1 className="h3 mb-2 text-gray-800">Ac Name</h1>
+        <h1 className="h3 mb-2 text-gray-800">Assembly Consituency</h1>
 
         {cardLoding2 ? (
           <div style={{ display: "flex", justifyContent: "center" }}>

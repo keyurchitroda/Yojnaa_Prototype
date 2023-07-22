@@ -50,7 +50,7 @@ const SchemeListCards = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
       <div>
-        <h1 className="h3 mb-2 text-gray-800">Boothlist</h1>
+        <h1 className="h3 mb-2 text-gray-800">Scheme List</h1>
 
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
