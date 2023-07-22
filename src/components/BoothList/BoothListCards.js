@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import { RotatingTriangles } from "react-loader-spinner";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { BoothDetails } from "../../redux/slices/cardSlice";
 
 const BoothListCards = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const cardDetails = useSelector(
+    (state) => state.reducer.cardsDetails.ac_details
+  );
 
   const url = window.location.href;
 
@@ -39,14 +45,20 @@ const BoothListCards = () => {
       });
   }, []);
 
-  const handleNavigateDetails = (item, query) => {
+  const dispatch = useDispatch();
+
+  const handleNavigateDetails = async (item, query) => {
+    await dispatch(BoothDetails(item));
     navigate(`/schemelist?${query}=${item.booth_no}`);
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
       <div>
-        <h1 className="h3 mb-2 text-gray-800">Booth List</h1>
+        <h1 className="h3 mb-2 text-gray-800">
+          Booth List - {cardDetails.ac_no} - {cardDetails.eng_ac_name} (
+          {cardDetails.ac_name})
+        </h1>
 
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -68,11 +80,11 @@ const BoothListCards = () => {
                   className="col-xl-3 col-md-6 mb-4"
                   onClick={() => handleNavigateDetails(item, "booth_no")}
                 >
-                  <div className="card border-left-success shadow h-100 py-2">
+                  <div className="card border-left-info shadow h-100 py-2">
                     <div className="card-body">
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
-                          <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                          <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
                             {item.booth_no}- {item.booth_name}
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">

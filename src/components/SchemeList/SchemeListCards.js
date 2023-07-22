@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
 import { RotatingTriangles } from "react-loader-spinner";
+import { SchemeDetails } from "../../redux/slices/cardSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const SchemeListCards = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [boothNo, setBoothNo] = useState("");
+
+  const cardDetails = useSelector(
+    (state) => state.reducer.cardsDetails.booth_details
+  );
 
   const url = window.location.href;
 
@@ -41,7 +47,10 @@ const SchemeListCards = () => {
       });
   }, []);
 
-  const handleNavigateDetails = (item, query) => {
+  const dispatch = useDispatch();
+
+  const handleNavigateDetails = async (item, query) => {
+    await dispatch(SchemeDetails(item));
     navigate(
       `/details?booth_no_new=${boothNo}&scheme_name=${item.scheme_name}`
     );
@@ -50,7 +59,10 @@ const SchemeListCards = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "20px" }}>
       <div>
-        <h1 className="h3 mb-2 text-gray-800">Scheme List</h1>
+        <h1 className="h3 mb-2 text-gray-800">
+          Scheme List - {cardDetails.booth_no} - {cardDetails.eng_booth_name} (
+          {cardDetails.booth_name})
+        </h1>
 
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -72,11 +84,11 @@ const SchemeListCards = () => {
                   className="col-xl-3 col-md-6 mb-4"
                   onClick={() => handleNavigateDetails(item, "booth_no")}
                 >
-                  <div className="card border-left-success shadow h-100 py-2">
+                  <div className="card border-left-danger shadow h-100 py-2">
                     <div className="card-body">
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
-                          <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                          <div className="text-xs font-weight-bold text-danger text-uppercase mb-1">
                             {item.scheme_name}
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">

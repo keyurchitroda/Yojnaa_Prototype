@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../config";
 import Pagination from "../pagination/Pagination";
 import { RotatingTriangles } from "react-loader-spinner";
+import { useSelector } from "react-redux";
 
 const CardDetailsTable = () => {
   const [data, setData] = useState([]);
@@ -12,6 +13,10 @@ const CardDetailsTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [singleData, setSingleData] = useState({});
   const [loading2, setLoading2] = useState(false);
+
+  const cardDetails = useSelector(
+    (state) => state.reducer.cardsDetails.scheme_details
+  );
 
   const entries = Object.entries(singleData);
 
@@ -124,11 +129,15 @@ const CardDetailsTable = () => {
 
   return (
     <div class="container-fluid">
-      <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+      <h1 class="h3 mb-2 text-gray-800">
+        {cardDetails.scheme_name} ({cardDetails.total_beneficiary})
+      </h1>
 
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+          <h6 class="m-0 font-weight-bold text-primary">
+            {cardDetails.scheme_name} ({cardDetails.total_beneficiary})
+          </h6>
         </div>
         <div class="card-body">
           <div class="table-responsive">
