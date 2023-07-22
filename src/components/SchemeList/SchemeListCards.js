@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { RotatingTriangles } from "react-loader-spinner";
-import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
+import { RotatingTriangles } from "react-loader-spinner";
 
-const BoothListCards = () => {
+const SchemeListCards = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [boothNo, setBoothNo] = useState("");
 
   const url = window.location.href;
 
@@ -29,18 +30,21 @@ const BoothListCards = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/schemesd/boothlistbyacno/?ac_no=${val}`;
+    let apiUrl = `${API_URL}/schemesd/schemebybooth/?booth_no_new=${val}`;
 
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setLoading(false);
-        setData(response);
+        setData(response.total_beneficiary_counts);
+        setBoothNo(response.booth_no_new);
       });
   }, []);
 
   const handleNavigateDetails = (item, query) => {
-    navigate(`/schemelist?${query}=${item.booth_no}`);
+    navigate(
+      `/details?booth_no_new=${boothNo}&scheme_name=${item.scheme_name}`
+    );
   };
 
   return (
@@ -73,13 +77,13 @@ const BoothListCards = () => {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            {item.booth_no}- {item.booth_name}
+                            {item.scheme_name}
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
-                            {item.eng_booth_name}
+                            {/* {item.eng_booth_name} */}
                           </div>
                           <div className="h6 mb-0 font-weight-bold text-gray-800">
-                            {/* {item.total_beneficiaries} */}
+                            {item.total_beneficiary}
                           </div>
                         </div>
                       </div>
@@ -94,4 +98,4 @@ const BoothListCards = () => {
   );
 };
 
-export default BoothListCards;
+export default SchemeListCards;

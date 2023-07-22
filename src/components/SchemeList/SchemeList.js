@@ -1,17 +1,17 @@
 import React from "react";
+import SchemeListCards from "./SchemeListCards";
 import Sidebar from "../Layout/Sidebar";
-import BoothListCards from "./BoothListCards";
 
-const BoothList = () => {
+const SchemeList = () => {
   return (
     <div>
       <body id="page-top">
         <div id="wrapper">
-          <Sidebar componentName={<BoothListCards />} />
+          <Sidebar componentName={<SchemeListCards />} />
         </div>
       </body>
     </div>
   );
 };
 
-export default BoothList;
+export default SchemeList;

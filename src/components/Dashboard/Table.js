@@ -149,7 +149,7 @@ const Table = () => {
                 ) : (
                   data.map((items, index) => (
                     <tr>
-                      <td>{items.idcard_no}</td>
+                      <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
                       <td>{items.booth_no ? items.booth_no : "N/A"}</td>
                       <td>{items.benificiary_f_name}</td>
                       <td>{items.benificiary_m_name}</td>

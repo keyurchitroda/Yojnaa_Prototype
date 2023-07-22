@@ -11,6 +11,7 @@ import Resgitser from "./components/Auth/Resgitser";
 import { ToastContainer } from "react-toastify";
 import CardDetails from "./components/CardDetails/CardDetails";
 import BoothList from "./components/BoothList/BoothList";
+import SchemeList from "./components/SchemeList/SchemeList";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -23,6 +24,7 @@ function App() {
         <Route path="/register" element={<Resgitser />}></Route>
         <Route path="/details" element={<CardDetails />}></Route>
         <Route path="/boothlist" element={<BoothList />}></Route>
+        <Route path="/schemelist" element={<SchemeList />}></Route>
       </Route>
     )
   );

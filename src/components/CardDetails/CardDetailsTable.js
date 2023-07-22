@@ -72,6 +72,9 @@ const CardDetailsTable = () => {
   // Create a URLSearchParams object from the URL
   const params = new URLSearchParams(new URL(url).search);
 
+  const val1 = params.get("booth_no_new");
+  const val2 = params.get("scheme_name");
+
   // Get the iterator for the key-value pairs
   const iterator = params.entries();
 
@@ -87,9 +90,9 @@ const CardDetailsTable = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/schemesd/benificiary-records/?${key}=${decodeURI(
-      val
-    )}&page=${currenPage}`;
+    let apiUrl = `${API_URL}/schemesd/benificiary-records/?booth_no_new=${decodeURI(
+      val1
+    )}&scheme_name=${val2}`;
 
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
@@ -137,6 +140,8 @@ const CardDetailsTable = () => {
             >
               <thead>
                 <tr>
+                  <th>idcard_no</th>
+                  <th>booth_no</th>
                   <th>Benificiary First Name</th>
                   <th>Benificiary Midle Name</th>
                   <th>Benificiary SurName</th>
@@ -150,6 +155,8 @@ const CardDetailsTable = () => {
               </thead>
               <tfoot>
                 <tr>
+                  <th>idcard_no</th>
+                  <th>booth_no</th>
                   <th>Benificiary First Name</th>
                   <th>Benificiary Midle Name</th>
                   <th>Benificiary SurName</th>
@@ -182,6 +189,8 @@ const CardDetailsTable = () => {
                 ) : (
                   data.map((items, index) => (
                     <tr>
+                      <td>{items.idcard_no}</td>
+                      <td>{items.booth_no ? items.booth_no : "N/A"}</td>
                       <td>{items.benificiary_f_name}</td>
                       <td>{items.benificiary_m_name}</td>
                       <td>{items.benificiary_surname}</td>

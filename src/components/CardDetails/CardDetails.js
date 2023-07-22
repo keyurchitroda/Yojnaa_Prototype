@@ -9,7 +9,7 @@ function CardDetails() {
     <div>
       <body id="page-top">
         <div id="wrapper">
-          <Sidebar componentName={<BoothListCards />} />
+          <Sidebar componentName={<CardDetailsTable />} />
           {/* <Header /> */}
         </div>
       </body>
