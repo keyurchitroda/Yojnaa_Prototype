@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import cardReducer from "./slices/cardSlice";
+import yojnaFormsReducer from "./slices/yojnaformSlice";
 import storage from "redux-persist/lib/storage";
 import {
   FLUSH,
@@ -14,12 +15,13 @@ import {
 
 const reducers = combineReducers({
   cardsDetails: cardReducer,
+  yojnaForms: yojnaFormsReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cardsDetails"], // only these reducers will be persisted
+  whitelist: ["cardsDetails", "yojnaForms"], // only these reducers will be persisted
   blacklist: [],
 };
 

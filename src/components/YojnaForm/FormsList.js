@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { API_URL } from "../config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ACNameList } from "../../redux/slices/yojnaformSlice";
 
 const FormsList = () => {
   const dispatch = useDispatch();
+
+  const AcNameList = useSelector(
+    (state) => state.reducer.yojnaForms.acNameList
+  );
 
   useEffect(() => {
     getAcNameList();
@@ -20,7 +24,6 @@ const FormsList = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
-        console.log("response", response);
         await dispatch(ACNameList(response.data));
       });
   };
@@ -56,10 +59,14 @@ const FormsList = () => {
           <div class="form-group col-md-4">
             <label for="exampleInputEmail1">AC Name</label>
             <select class="custom-select" required>
-              <option value="">Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="" disabled selected>
+                Open this select menu
+              </option>
+              {AcNameList.map((items) => (
+                <option value={items.ac_no}>
+                  {items.eng_ac_name} ({items.ac_name})
+                </option>
+              ))}
             </select>
           </div>
           <div class="form-group col-md-4">
