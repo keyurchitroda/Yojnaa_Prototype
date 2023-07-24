@@ -9,6 +9,10 @@ const initialState = {
     booth_no: "",
     village_name: "",
   },
+  schemeList: [],
+  pageCount: 0,
+  currentPage: 1,
+  isLoading: false,
 };
 
 const formSlice = createSlice({
@@ -27,6 +31,21 @@ const formSlice = createSlice({
     searchValues: (state, action) => {
       state.searchValues = { ...state.searchValues, ...action.payload }; // Update specific properties using spread
     },
+    setSchemeListValues: (state, action) => {
+      state.schemeList = action.payload;
+    },
+    setPageCountValues: (state, action) => {
+      state.pageCount = action.payload;
+    },
+    setCurrentPageValues: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    lodingTrue: (state, action) => {
+      state.isLoading = true;
+    },
+    lodingFalse: (state, action) => {
+      state.isLoading = false;
+    },
   },
 });
 
@@ -39,6 +58,11 @@ const {
   boothNameListSuccess,
   searchValues,
   vibhagNameListSuccess,
+  setPageCountValues,
+  setSchemeListValues,
+  lodingTrue,
+  lodingFalse,
+  setCurrentPageValues,
 } = formSlice.actions;
 
 export const ACNameList = (values) => async (dispatch) => {
@@ -78,6 +102,32 @@ export const clearVlaue = (values) => async (dispatch) => {
     await dispatch(acNameListSuccess([]));
     await dispatch(boothNameListSuccess([]));
     await dispatch(searchValues({}));
+  } catch (e) {
+    console.log("e", e);
+  }
+};
+
+export const GetSearchSchemeValues = (values, currPage) => async (dispatch) => {
+  try {
+    await dispatch(setSchemeListValues(values.results));
+    await dispatch(setPageCountValues(values.count));
+    await dispatch(setCurrentPageValues(currPage));
+  } catch (e) {
+    console.log("e", e);
+  }
+};
+
+export const setLoadingTrue = (values) => async (dispatch) => {
+  try {
+    await dispatch(lodingTrue());
+  } catch (e) {
+    console.log("e", e);
+  }
+};
+
+export const setLoadingFalse = (values) => async (dispatch) => {
+  try {
+    await dispatch(lodingFalse());
   } catch (e) {
     console.log("e", e);
   }
