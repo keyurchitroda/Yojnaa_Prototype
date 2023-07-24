@@ -35,6 +35,10 @@ const SchemeTable = () => {
       });
   };
 
+  const handleEditForm = () => {
+    console.log("tetdgwdggewdgedgdhejh");
+  };
+
   return (
     <div class="container-fluid">
       <div class="card shadow mb-4">
@@ -52,6 +56,7 @@ const SchemeTable = () => {
             >
               <thead>
                 <tr>
+                  <th>Action</th>
                   <th>AC Name</th>
                   <th>Booth No</th>
                   <th>Idcard No</th>
@@ -68,6 +73,7 @@ const SchemeTable = () => {
               </thead>
               <tfoot>
                 <tr>
+                  <th>Action</th>
                   <th>AC Name</th>
                   <th>Booth No</th>
                   <th>Idcard No</th>
@@ -102,22 +108,37 @@ const SchemeTable = () => {
                   </tr>
                 ) : (
                   _.map(_.get(yojnaForms, "schemeList", []), (items, index) => (
-                    <tr>
-                      <td>{items.ac_name ? items.ac_name : "N/A"}</td>
-                      <td>{items.booth_no_new ? items.booth_no_new : "N/A"}</td>
-                      <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
-                      <td>{items.Name ? items.Name : "N/A"}</td>
-                      <td>{items.mobile_no ? items.mobile_no : "N/A"}</td>
-                      <td>{items.Address ? items.Address : "N/A"}</td>
-                      <td>{items.village_name ? items.village_name : "N/A"}</td>
-                      <td>{items.taluka_name ? items.taluka_name : "N/A"}</td>
-                      <td>{items.dist_name ? items.dist_name : "N/A"}</td>
-                      <td>{items.pincode ? items.pincode : "N/A"}</td>
-                      <td>{items.scheme_name ? items.scheme_name : "N/A"}</td>
-                      <td>
-                        {items.benifit_detail ? items.benifit_detail : "N/A"}
-                      </td>
-                    </tr>
+                    <div>
+                      <tr>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-outline-primary"
+                            onClick={handleEditForm}
+                          >
+                            Edit
+                          </button>
+                        </td>
+                        <td>{items.ac_name ? items.ac_name : "N/A"}</td>
+                        <td>
+                          {items.booth_no_new ? items.booth_no_new : "N/A"}
+                        </td>
+                        <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
+                        <td>{items.Name ? items.Name : "N/A"}</td>
+                        <td>{items.mobile_no ? items.mobile_no : "N/A"}</td>
+                        <td>{items.Address ? items.Address : "N/A"}</td>
+                        <td>
+                          {items.village_name ? items.village_name : "N/A"}
+                        </td>
+                        <td>{items.taluka_name ? items.taluka_name : "N/A"}</td>
+                        <td>{items.dist_name ? items.dist_name : "N/A"}</td>
+                        <td>{items.pincode ? items.pincode : "N/A"}</td>
+                        <td>{items.scheme_name ? items.scheme_name : "N/A"}</td>
+                        <td>
+                          {items.benifit_detail ? items.benifit_detail : "N/A"}
+                        </td>
+                      </tr>
+                    </div>
                   ))
                 )}
               </tbody>
