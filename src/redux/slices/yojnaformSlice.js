@@ -13,6 +13,7 @@ const initialState = {
   pageCount: 0,
   currentPage: 1,
   isLoading: false,
+  singleBenificaryRecord: {},
 };
 
 const formSlice = createSlice({
@@ -46,6 +47,9 @@ const formSlice = createSlice({
     lodingFalse: (state, action) => {
       state.isLoading = false;
     },
+    setSingleRecordSuccess: (state, action) => {
+      state.singleBenificaryRecord = action.payload;
+    },
   },
 });
 
@@ -63,6 +67,7 @@ const {
   lodingTrue,
   lodingFalse,
   setCurrentPageValues,
+  setSingleRecordSuccess,
 } = formSlice.actions;
 
 export const ACNameList = (values) => async (dispatch) => {
@@ -128,6 +133,14 @@ export const setLoadingTrue = (values) => async (dispatch) => {
 export const setLoadingFalse = (values) => async (dispatch) => {
   try {
     await dispatch(lodingFalse());
+  } catch (e) {
+    console.log("e", e);
+  }
+};
+
+export const setSingleSchemeRecord = (values) => async (dispatch) => {
+  try {
+    await dispatch(setSingleRecordSuccess(values));
   } catch (e) {
     console.log("e", e);
   }

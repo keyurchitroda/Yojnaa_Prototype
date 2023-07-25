@@ -25,7 +25,7 @@ const FormsList = () => {
   const yojnaForms = useSelector((state) => state.reducer.yojnaForms);
 
   useEffect(() => {
-    dispatch(clearVlaue());
+    // dispatch(clearVlaue());
     getAcNameList();
   }, []);
 
@@ -102,6 +102,7 @@ const FormsList = () => {
     }&booth_no_new=${
       yojnaForms.searchValues?.booth_no ? yojnaForms.searchValues?.booth_no : ""
     }&page=${1}`;
+
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {

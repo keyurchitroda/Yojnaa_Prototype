@@ -7,11 +7,14 @@ import {
   GetSearchSchemeValues,
   setLoadingFalse,
   setLoadingTrue,
+  setSingleSchemeRecord,
 } from "../../redux/slices/yojnaformSlice";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const SchemeTable = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const yojnaForms = useSelector((state) => state.reducer.yojnaForms);
 
@@ -35,8 +38,21 @@ const SchemeTable = () => {
       });
   };
 
-  const handleEditForm = () => {
-    console.log("tetdgwdggewdgedgdhejh");
+  const handleEditForm = async (id) => {
+    await dispatch(setLoadingTrue());
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    let apiUrl = `${API_URL}/schemesd/benificiary/${id}`;
+    fetch(apiUrl, requestOptions)
+      .then((res) => res.json())
+      .then(async (response) => {
+        console.log(response);
+        await dispatch(setSingleSchemeRecord(response));
+        navigate("/yojnaform");
+        await dispatch(setLoadingFalse());
+      });
   };
 
   return (
@@ -108,37 +124,31 @@ const SchemeTable = () => {
                   </tr>
                 ) : (
                   _.map(_.get(yojnaForms, "schemeList", []), (items, index) => (
-                    <div>
-                      <tr>
-                        <td>
-                          <button
-                            type="button"
-                            class="btn btn-outline-primary"
-                            onClick={handleEditForm}
-                          >
-                            Edit
-                          </button>
-                        </td>
-                        <td>{items.ac_name ? items.ac_name : "N/A"}</td>
-                        <td>
-                          {items.booth_no_new ? items.booth_no_new : "N/A"}
-                        </td>
-                        <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
-                        <td>{items.Name ? items.Name : "N/A"}</td>
-                        <td>{items.mobile_no ? items.mobile_no : "N/A"}</td>
-                        <td>{items.Address ? items.Address : "N/A"}</td>
-                        <td>
-                          {items.village_name ? items.village_name : "N/A"}
-                        </td>
-                        <td>{items.taluka_name ? items.taluka_name : "N/A"}</td>
-                        <td>{items.dist_name ? items.dist_name : "N/A"}</td>
-                        <td>{items.pincode ? items.pincode : "N/A"}</td>
-                        <td>{items.scheme_name ? items.scheme_name : "N/A"}</td>
-                        <td>
-                          {items.benifit_detail ? items.benifit_detail : "N/A"}
-                        </td>
-                      </tr>
-                    </div>
+                    <tr>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          onClick={() => handleEditForm(items.id)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                      <td>{items.ac_name ? items.ac_name : "N/A"}</td>
+                      <td>{items.booth_no_new ? items.booth_no_new : "N/A"}</td>
+                      <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
+                      <td>{items.Name ? items.Name : "N/A"}</td>
+                      <td>{items.mobile_no ? items.mobile_no : "N/A"}</td>
+                      <td>{items.Address ? items.Address : "N/A"}</td>
+                      <td>{items.village_name ? items.village_name : "N/A"}</td>
+                      <td>{items.taluka_name ? items.taluka_name : "N/A"}</td>
+                      <td>{items.dist_name ? items.dist_name : "N/A"}</td>
+                      <td>{items.pincode ? items.pincode : "N/A"}</td>
+                      <td>{items.scheme_name ? items.scheme_name : "N/A"}</td>
+                      <td>
+                        {items.benifit_detail ? items.benifit_detail : "N/A"}
+                      </td>
+                    </tr>
                   ))
                 )}
               </tbody>

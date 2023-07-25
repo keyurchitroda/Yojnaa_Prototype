@@ -13,6 +13,7 @@ import CardDetails from "./components/CardDetails/CardDetails";
 import BoothList from "./components/BoothList/BoothList";
 import SchemeList from "./components/SchemeList/SchemeList";
 import YojnaForm from "./components/YojnaForm/YojnaForm";
+import { YojnaFormEdit } from "./components/YojnaForm/YojnaFormEdit";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -26,7 +27,8 @@ function App() {
         <Route path="/details" element={<CardDetails />}></Route>
         <Route path="/boothlist" element={<BoothList />}></Route>
         <Route path="/schemelist" element={<SchemeList />}></Route>
-        <Route path="/yojnaform" element={<YojnaForm />}></Route>
+        <Route path="/yojnaformlist" element={<YojnaForm />}></Route>
+        <Route path="/yojnaform" element={<YojnaFormEdit />}></Route>
       </Route>
     )
   );
