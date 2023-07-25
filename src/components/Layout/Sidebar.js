@@ -3,11 +3,21 @@ import "../../styles/style.css";
 import { Navbar } from "./Navbar";
 import Dahsboard from "../Dashboard/Dahsboard";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setSidebadeStyle } from "../../redux/slices/styleSlice";
 
 const Sidebar = ({ componentName }) => {
   // const [style, setStyle] = useState(
   //   "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
   // );
+
+  const currentStyle = useSelector(
+    (state) => state.reducer.sidebarStyle.currentSidebarStyle
+  );
+
+  console.log("currentStyle", currentStyle);
+
+  const dispatch = useDispatch();
 
   const [style, setStyle] = useState(
     "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
@@ -15,13 +25,27 @@ const Sidebar = ({ componentName }) => {
 
   const changeStyle = () => {
     if (
-      style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      currentStyle ==
+      "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
     ) {
+      console.log("if-=-=-=-=-=-=-=");
       setStyle(
         "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
       );
+      dispatch(
+        setSidebadeStyle(
+          "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
+        )
+      );
     } else {
+      console.log("else-=-=-=-=-=-=-=");
+
       setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
+      dispatch(
+        setSidebadeStyle(
+          "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        )
+      );
     }
   };
 
@@ -72,13 +96,24 @@ const Sidebar = ({ componentName }) => {
 
   const changeStyle1 = () => {
     if (
-      style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+      currentStyle ==
+      "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
     ) {
       setStyle(
         "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
       );
+      dispatch(
+        setSidebadeStyle(
+          "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
+        )
+      );
     } else {
       setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
+      dispatch(
+        setSidebadeStyle(
+          "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        )
+      );
     }
   };
 
@@ -132,7 +167,14 @@ const Sidebar = ({ componentName }) => {
 
   return (
     <>
-      <ul className={style} id="accordionSidebar">
+      <ul
+        className={
+          currentStyle
+            ? currentStyle
+            : "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        }
+        id="accordionSidebar"
+      >
         {/*  <!-- Sidebar - Brand --> */}
         <a
           className="sidebar-brand d-flex align-items-center justify-content-center"
