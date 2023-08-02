@@ -32,7 +32,6 @@ const SchemeTable = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
-        console.log(response);
         await dispatch(GetSearchSchemeValues(response, page));
         await dispatch(setLoadingFalse());
       });
@@ -48,7 +47,6 @@ const SchemeTable = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
-        console.log(response);
         await dispatch(setSingleSchemeRecord(response));
         navigate("/yojnaform");
         await dispatch(setLoadingFalse());

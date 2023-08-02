@@ -15,8 +15,6 @@ const Sidebar = ({ componentName }) => {
     (state) => state.reducer.sidebarStyle.currentSidebarStyle
   );
 
-  console.log("currentStyle", currentStyle);
-
   const dispatch = useDispatch();
 
   const [style, setStyle] = useState(
@@ -28,7 +26,6 @@ const Sidebar = ({ componentName }) => {
       currentStyle ==
       "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
     ) {
-      console.log("if-=-=-=-=-=-=-=");
       setStyle(
         "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
       );
@@ -38,8 +35,6 @@ const Sidebar = ({ componentName }) => {
         )
       );
     } else {
-      console.log("else-=-=-=-=-=-=-=");
-
       setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
       dispatch(
         setSidebadeStyle(
@@ -55,7 +50,6 @@ const Sidebar = ({ componentName }) => {
   };
 
   const newStyle = localStorage.getItem("styleToggle");
-  console.log("newStyle", newStyle);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -80,7 +74,6 @@ const Sidebar = ({ componentName }) => {
       setSelectedImage(file);
     } else {
       // Show an error message or perform any desired action for invalid file types
-      console.log("Invalid file type. Please select a valid XLSX file.");
       toast.error("Invalid file type. Please select a valid XLSX file", {
         position: "top-right",
         autoClose: 5000,
@@ -135,7 +128,6 @@ const Sidebar = ({ componentName }) => {
     fetch("http://13.127.21.5:8000/newdat/importexcel/", requestOptions)
       .then((res) => res.json())
       .then((response) => {
-        console.log("response", response);
         if (response.status === 1) {
           setIsLoading(false);
           handleCloseModal();

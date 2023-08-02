@@ -6,7 +6,6 @@ import {
   BoothNameList,
   GetSearchSchemeValues,
   VibhagNameList,
-  clearVlaue,
   setLoadingFalse,
   setLoadingTrue,
   setSearchValues,
@@ -108,7 +107,6 @@ const FormsList = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
-        console.log(response);
         await dispatch(GetSearchSchemeValues(response));
         await dispatch(setLoadingFalse());
       });

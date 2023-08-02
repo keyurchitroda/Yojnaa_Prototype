@@ -17,8 +17,6 @@ import { YojnaFormEdit } from "./components/YojnaForm/YojnaFormEdit";
 import { YojnaSurveyFormAction } from "./components/YojnaSurveyForm/YojnaSurveyFormAction";
 
 function App() {
-  const token = localStorage.getItem("token");
-  console.log("app-=-=-=-=-", window.location.href);
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
@@ -42,7 +40,6 @@ function App() {
     <>
       <div className="font-bodyFont">
         <ToastContainer />
-
         <RouterProvider router={router} />
       </div>
     </>

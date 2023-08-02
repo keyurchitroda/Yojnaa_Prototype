@@ -233,7 +233,6 @@ const YojnaFormAction = () => {
       fetch(apiUrl, requestOptions)
         .then((res) => res.json())
         .then(async (response) => {
-          console.log(response);
           navigate("/yojnaformsurvey");
         });
       // Perform your form submission logic here

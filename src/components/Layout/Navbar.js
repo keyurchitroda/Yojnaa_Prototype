@@ -33,7 +33,6 @@ export const Navbar = () => {
       setSelectedImage(file);
     } else {
       // Show an error message or perform any desired action for invalid file types
-      console.log("Invalid file type. Please select a valid XLSX file.");
       toast.error("Invalid file type. Please select a valid XLSX file", {
         position: "top-right",
         autoClose: 5000,
@@ -46,19 +45,6 @@ export const Navbar = () => {
       });
     }
   };
-
-  // const changeStyle = () => {
-  //   console.log("style-=-=-", style);
-  //   if (
-  //     style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-  //   ) {
-  //     setStyle(
-  //       "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled"
-  //     );
-  //   } else {
-  //     setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
-  //   }
-  // };
 
   const changeStyle = () => {
     if (
@@ -108,7 +94,6 @@ export const Navbar = () => {
     fetch("http://13.127.21.5:8000/newdat/importexcel/", requestOptions)
       .then((res) => res.json())
       .then((response) => {
-        console.log("response", response);
         if (response.status === 1) {
           setIsLoading(false);
           handleCloseModal();

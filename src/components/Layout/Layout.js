@@ -6,7 +6,6 @@ import { Navbar } from "./Navbar";
 import Dahsboard from "../Dashboard/Dahsboard";
 
 const Layout = () => {
-  console.log(window.location.href);
   return (
     <div>
       <body id="page-top">

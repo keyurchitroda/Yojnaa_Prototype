@@ -13,12 +13,27 @@ import _ from "lodash";
 import { RotatingTriangles } from "react-loader-spinner";
 
 export const YojnaSurveyForm = () => {
-  const array = [1, 2, 3, 4, 5, 6];
   const yojnaForms = useSelector((state) => state.reducer.yojnaForms);
-  console.log("yojnaForms", yojnaForms);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const selectedYojnaArray = _.map(
+    _.get(yojnaForms, "existyojnas", []),
+    (item) => {
+      return {
+        earlier_benefit: item.earlier_benefit,
+        is_beneficial: item.is_beneficial,
+        remarks: item.remarks,
+        rest_of_benefits: item.rest_of_benefits,
+        yojna_id: item.scheme_id,
+        voters_id: item.voters_id,
+        id: item.id,
+      };
+    }
+  );
+
+  const [userInputs, setUserInputs] = useState([]);
 
   useEffect(() => {
     getAllYojnas();
@@ -39,7 +54,17 @@ export const YojnaSurveyForm = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
-        console.log(response);
+        const updatedUserInputs = {};
+        response.forEach((item) => {
+          updatedUserInputs[item.scheme_id] = {
+            is_beneficial: item.is_beneficial,
+            earlier_benefit: item.earlier_benefit,
+            rest_of_benefits: item.rest_of_benefits,
+            remarks: item.remarks,
+          };
+        });
+
+        setUserInputs(updatedUserInputs);
         await dispatch(getExistYojnas(response));
         await dispatch(setLoadingFalse());
       });
@@ -55,47 +80,36 @@ export const YojnaSurveyForm = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
-        console.log(response);
         await dispatch(getAllYojna(response));
         await dispatch(setLoadingFalse());
       });
   };
 
-  const [expandedIndex, setExpandedIndex] = useState(0);
+  const [expandedYojnaIds, setExpandedYojnaIds] = useState(selectedYojnaArray);
 
-  const [userInputs, setUserInputs] = useState(
-    _.get(yojnaForms, "existyojnas", [])
-  );
-
-  const handleAccordionClick = (index) => {
-    if (expandedIndex === index) {
-      setExpandedIndex(null); // Clicking the same accordion again will close it
+  const handleAccordionClick = (yojna_id) => {
+    if (expandedYojnaIds.includes(yojna_id)) {
+      setExpandedYojnaIds(expandedYojnaIds.filter((id) => id !== yojna_id));
     } else {
-      setExpandedIndex(index); // Clicking a different accordion will open it
+      setExpandedYojnaIds([...expandedYojnaIds, yojna_id]);
     }
   };
 
-  const handleChange = (index, field, value) => {
-    const updatedUserInputs = [...userInputs];
-    if (!updatedUserInputs[index]) {
-      updatedUserInputs[index] = {
-        voters_id: _.get(yojnaForms, "singleBenificaryRecord.id", ""), // You can modify this based on your requirements
-        scheme_id: yojnaForms.yojnas[index]?.yojna_id,
-        is_beneficial: "No", // Default value
-        earlier_benefit: "No", // Default value
-        rest_of_benefits: 0, // Default value
-        remarks: "", // Default value
-      };
+  const handleChange = (yojna_id, field, value) => {
+    const updatedUserInputs = { ...userInputs };
+    if (!updatedUserInputs[yojna_id]) {
+      updatedUserInputs[yojna_id] = {};
     }
-    updatedUserInputs[index][field] = value;
+    updatedUserInputs[yojna_id][field] = value;
     setUserInputs(updatedUserInputs);
   };
 
   const handleSubmit = () => {
-    const reqData = _.filter(userInputs, (item) => item !== undefined);
-    console.log(reqData);
-    //http://127.0.0.1:8000/schemesd/surveyquestion/create/
-
+    const reqData = Object.keys(userInputs).map((yojna_id) => ({
+      voters_id: _.get(yojnaForms, "singleBenificaryRecord.id", ""),
+      scheme_id: yojna_id,
+      ...userInputs[yojna_id],
+    }));
     const requestOptions = {
       method: "Post",
       headers: { "Content-Type": "application/json" },
@@ -105,7 +119,6 @@ export const YojnaSurveyForm = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
-        console.log(response);
         navigate("/yojnaformlist");
       });
   };
@@ -131,14 +144,14 @@ export const YojnaSurveyForm = () => {
                 <h5 className="mb-0">
                   <button
                     className="btn btn-link"
-                    onClick={() => handleAccordionClick(index)}
-                    aria-expanded={expandedIndex === index}
+                    onClick={() => handleAccordionClick(item?.yojna_id)}
+                    aria-expanded={expandedYojnaIds.includes(item.yojna_id)}
                   >
                     {item.yojna_name}
                   </button>
                 </h5>
               </div>
-              {expandedIndex === index && (
+              {expandedYojnaIds.includes(item.yojna_id) && (
                 <div
                   className={`collapse show`}
                   aria-labelledby={`heading${index}`}
@@ -174,11 +187,12 @@ export const YojnaSurveyForm = () => {
                               className="custom-control-input"
                               value="Yes"
                               checked={
-                                userInputs[index]?.is_beneficial === "Yes"
+                                userInputs[item.yojna_id]?.is_beneficial ===
+                                "Yes"
                               }
                               onChange={(e) =>
                                 handleChange(
-                                  index,
+                                  item.yojna_id,
                                   "is_beneficial",
                                   e.target.value
                                 )
@@ -199,11 +213,12 @@ export const YojnaSurveyForm = () => {
                               className="custom-control-input"
                               value="No"
                               checked={
-                                userInputs[index]?.is_beneficial === "No"
+                                userInputs[item.yojna_id]?.is_beneficial ===
+                                "No"
                               }
                               onChange={(e) =>
                                 handleChange(
-                                  index,
+                                  item.yojna_id,
                                   "is_beneficial",
                                   e.target.value
                                 )
@@ -247,11 +262,12 @@ export const YojnaSurveyForm = () => {
                               className="custom-control-input"
                               value="Yes"
                               checked={
-                                userInputs[index]?.earlier_benefit === "Yes"
+                                userInputs[item.yojna_id]?.earlier_benefit ===
+                                "Yes"
                               }
                               onChange={(e) =>
                                 handleChange(
-                                  index,
+                                  item.yojna_id,
                                   "earlier_benefit",
                                   e.target.value
                                 )
@@ -272,11 +288,12 @@ export const YojnaSurveyForm = () => {
                               className="custom-control-input"
                               value="No"
                               checked={
-                                userInputs[index]?.earlier_benefit === "No"
+                                userInputs[item.yojna_id]?.earlier_benefit ===
+                                "No"
                               }
                               onChange={(e) =>
                                 handleChange(
-                                  index,
+                                  item.yojna_id,
                                   "earlier_benefit",
                                   e.target.value
                                 )
@@ -310,10 +327,10 @@ export const YojnaSurveyForm = () => {
                           className="form-control"
                           id={`rest_of_benefits-${index}`}
                           placeholder="rest_of_benefits"
-                          value={userInputs[index]?.rest_of_benefits}
+                          value={userInputs[item.yojna_id]?.rest_of_benefits}
                           onChange={(e) =>
                             handleChange(
-                              index,
+                              item.yojna_id,
                               "rest_of_benefits",
                               e.target.value
                             )
@@ -334,9 +351,9 @@ export const YojnaSurveyForm = () => {
                         id={`remarks-${index}`}
                         aria-describedby="રિમાર્કસ"
                         placeholder="રિમાર્કસ"
-                        value={userInputs[index]?.remarks}
+                        value={userInputs[item.yojna_id]?.remarks}
                         onChange={(e) =>
-                          handleChange(index, "remarks", e.target.value)
+                          handleChange(item.yojna_id, "remarks", e.target.value)
                         }
                       />
                     </div>
