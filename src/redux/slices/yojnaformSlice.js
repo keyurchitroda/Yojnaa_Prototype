@@ -14,6 +14,8 @@ const initialState = {
   currentPage: 1,
   isLoading: false,
   singleBenificaryRecord: {},
+  yojnas: [],
+  existyojnas: [],
 };
 
 const formSlice = createSlice({
@@ -50,6 +52,12 @@ const formSlice = createSlice({
     setSingleRecordSuccess: (state, action) => {
       state.singleBenificaryRecord = action.payload;
     },
+    getAllYojnaSuccess: (state, action) => {
+      state.yojnas = action.payload;
+    },
+    getExistYojnasSuccess: (state, action) => {
+      state.existyojnas = action.payload;
+    },
   },
 });
 
@@ -68,6 +76,8 @@ const {
   lodingFalse,
   setCurrentPageValues,
   setSingleRecordSuccess,
+  getAllYojnaSuccess,
+  getExistYojnasSuccess,
 } = formSlice.actions;
 
 export const ACNameList = (values) => async (dispatch) => {
@@ -141,6 +151,22 @@ export const setLoadingFalse = (values) => async (dispatch) => {
 export const setSingleSchemeRecord = (values) => async (dispatch) => {
   try {
     await dispatch(setSingleRecordSuccess(values));
+  } catch (e) {
+    console.log("e", e);
+  }
+};
+
+export const getAllYojna = (values) => async (dispatch) => {
+  try {
+    await dispatch(getAllYojnaSuccess(values));
+  } catch (e) {
+    console.log("e", e);
+  }
+};
+
+export const getExistYojnas = (values) => async (dispatch) => {
+  try {
+    await dispatch(getExistYojnasSuccess(values));
   } catch (e) {
     console.log("e", e);
   }

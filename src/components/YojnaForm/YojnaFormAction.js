@@ -27,13 +27,13 @@ const YojnaFormAction = () => {
 
   const fullName = `${_.get(
     yojnaForms,
-    "singleBenificaryRecord.benificiary_f_name",
+    "singleBenificaryRecord.eng_f_name",
     ""
-  )} ${_.get(
+  )} ${_.get(yojnaForms, "singleBenificaryRecord.eng_m_name", "")} ${_.get(
     yojnaForms,
-    "singleBenificaryRecord.benificiary_m_name",
+    "singleBenificaryRecord.eng_surname",
     ""
-  )} ${_.get(yojnaForms, "singleBenificaryRecord.benificiary_surname", "")}`;
+  )}`;
 
   const [districtName, setDistricName] = useState(
     _.get(yojnaForms, "singleBenificaryRecord.dist_name", "")
@@ -46,7 +46,9 @@ const YojnaFormAction = () => {
   );
   const [address, setAddress] = useState(fullAddress);
   const [headName, setHeadName] = useState(fullName);
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState(
+    _.get(yojnaForms, "singleBenificaryRecord.age", "")
+  );
   const [totlaIncome, setTotalIncome] = useState(
     _.get(yojnaForms, "singleBenificaryRecord.total_income", "")
   );
@@ -63,12 +65,14 @@ const YojnaFormAction = () => {
     _.get(yojnaForms, "singleBenificaryRecord.rationcard_category", "")
   );
   const [isAddharPending, setIsAddharPending] = useState(
-    _.get(yojnaForms, "singleBenificaryRecord.is_addhar_pending", "")
+    _.get(yojnaForms, "singleBenificaryRecord.is_adharcard_pending", "")
   );
   const [totalMemberAdharPending, setTotalMemberAdharPending] = useState(
     _.get(yojnaForms, "singleBenificaryRecord.pending_members", "")
   );
-  const [isDisability, setIsDisability] = useState("");
+  const [isDisability, setIsDisability] = useState(
+    _.get(yojnaForms, "singleBenificaryRecord.is_disable", "")
+  );
   const [percentageOfDisability, setPercentageOfDisability] = useState(
     _.get(yojnaForms, "singleBenificaryRecord.disability_score", "")
   );
@@ -95,30 +99,30 @@ const YojnaFormAction = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate districtName
-    if (!districtName) {
-      newErrors.districtName = "District is required";
-    }
+    // // Validate districtName
+    // if (!districtName) {
+    //   newErrors.districtName = "District is required";
+    // }
 
-    // Validate talukaName
-    if (!talukaName) {
-      newErrors.talukaName = "Taluka is required";
-    }
+    // // Validate talukaName
+    // if (!talukaName) {
+    //   newErrors.talukaName = "Taluka is required";
+    // }
 
-    // Validate villageName
-    if (!villageName) {
-      newErrors.villageName = "Village is required";
-    }
+    // // Validate villageName
+    // if (!villageName) {
+    //   newErrors.villageName = "Village is required";
+    // }
 
-    // Validate address
-    if (!address) {
-      newErrors.address = "Address is required";
-    }
+    // // Validate address
+    // if (!address) {
+    //   newErrors.address = "Address is required";
+    // }
 
-    // Validate headName
-    if (!headName) {
-      newErrors.headName = "Head of the family name is required";
-    }
+    // // Validate headName
+    // if (!headName) {
+    //   newErrors.headName = "Head of the family name is required";
+    // }
 
     // // Validate age
     // if (!age) {
@@ -208,9 +212,10 @@ const YojnaFormAction = () => {
         secc: isIncludedSECC,
         secc_score: score,
         rationcard_category: categoryOfRationCard,
-        is_addhar_pending: isAddharPending,
+        is_adharcard_pending: isAddharPending,
         pending_members:
           isAddharPending === "Yes" ? totalMemberAdharPending : null,
+        is_disable: isDisability,
         disability_score:
           isDisability === "Yes" ? percentageOfDisability : null,
       };
@@ -220,7 +225,7 @@ const YojnaFormAction = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqData),
       };
-      let apiUrl = `${API_URL}/schemesd/benificiary/${_.get(
+      let apiUrl = `${API_URL}/schemesd/voters/${_.get(
         yojnaForms,
         "singleBenificaryRecord.id",
         ""
@@ -229,7 +234,7 @@ const YojnaFormAction = () => {
         .then((res) => res.json())
         .then(async (response) => {
           console.log(response);
-          navigate("/yojnaformlist");
+          navigate("/yojnaformsurvey");
         });
       // Perform your form submission logic here
     } else {

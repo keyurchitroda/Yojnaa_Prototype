@@ -23,8 +23,8 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cardsDetails", "", "sidebarStyle"], // only these reducers will be persisted
-  blacklist: ["yojnaForms"],
+  whitelist: ["cardsDetails", "yojnaForms", "sidebarStyle"], // only these reducers will be persisted
+  blacklist: [""],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

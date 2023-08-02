@@ -14,6 +14,7 @@ import BoothList from "./components/BoothList/BoothList";
 import SchemeList from "./components/SchemeList/SchemeList";
 import YojnaForm from "./components/YojnaForm/YojnaForm";
 import { YojnaFormEdit } from "./components/YojnaForm/YojnaFormEdit";
+import { YojnaSurveyFormAction } from "./components/YojnaSurveyForm/YojnaSurveyFormAction";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -29,6 +30,10 @@ function App() {
         <Route path="/schemelist" element={<SchemeList />}></Route>
         <Route path="/yojnaformlist" element={<YojnaForm />}></Route>
         <Route path="/yojnaform" element={<YojnaFormEdit />}></Route>
+        <Route
+          path="/yojnaformsurvey"
+          element={<YojnaSurveyFormAction />}
+        ></Route>
       </Route>
     )
   );

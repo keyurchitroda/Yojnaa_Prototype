@@ -97,17 +97,19 @@ const FormsList = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/schemesd/benificiary-records/?ac_no=${
-      yojnaForms.searchValues.ac_no
-    }&booth_no_new=${
-      yojnaForms.searchValues?.booth_no ? yojnaForms.searchValues?.booth_no : ""
-    }&page=${1}`;
+    // let apiUrl = `${API_URL}/schemesd/voters/?ac_no=${
+    //   yojnaForms.searchValues.ac_no
+    // }&booth_no=${
+    //   yojnaForms.searchValues?.booth_no ? yojnaForms.searchValues?.booth_no : ""
+    // }&page=${1}`;
+
+    let apiUrl = `${API_URL}/schemesd/voters/`;
 
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
         console.log(response);
-        await dispatch(GetSearchSchemeValues(response.data));
+        await dispatch(GetSearchSchemeValues(response));
         await dispatch(setLoadingFalse());
       });
   };

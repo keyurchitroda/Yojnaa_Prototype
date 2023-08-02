@@ -24,16 +24,16 @@ const SchemeTable = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/schemesd/benificiary-records/?ac_no=${
+    let apiUrl = `${API_URL}/schemesd/voters/?ac_no=${
       yojnaForms.searchValues.ac_no
-    }&booth_no_new=${
+    }&booth_no=${
       yojnaForms.searchValues?.booth_no ? yojnaForms.searchValues?.booth_no : ""
     }&page=${page}`;
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
         console.log(response);
-        await dispatch(GetSearchSchemeValues(response.data, page));
+        await dispatch(GetSearchSchemeValues(response, page));
         await dispatch(setLoadingFalse());
       });
   };
@@ -44,7 +44,7 @@ const SchemeTable = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/schemesd/benificiary/${id}`;
+    let apiUrl = `${API_URL}/schemesd/voters/${id}`;
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
@@ -135,9 +135,9 @@ const SchemeTable = () => {
                         </button>
                       </td>
                       <td>{items.ac_name ? items.ac_name : "N/A"}</td>
-                      <td>{items.booth_no_new ? items.booth_no_new : "N/A"}</td>
+                      <td>{items.booth_no ? items.booth_no : "N/A"}</td>
                       <td>{items.idcard_no ? items.idcard_no : "N/A"}</td>
-                      <td>{items.Name ? items.Name : "N/A"}</td>
+                      <td>{`${items.eng_f_name} ${items.eng_m_name} ${items.eng_surname}`}</td>
                       <td>{items.mobile_no ? items.mobile_no : "N/A"}</td>
                       <td>{items.Address ? items.Address : "N/A"}</td>
                       <td>{items.village_name ? items.village_name : "N/A"}</td>
