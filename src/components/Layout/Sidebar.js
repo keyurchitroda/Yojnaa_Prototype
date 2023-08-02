@@ -5,6 +5,7 @@ import Dahsboard from "../Dashboard/Dahsboard";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setSidebadeStyle } from "../../redux/slices/styleSlice";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ componentName }) => {
   // const [style, setStyle] = useState(
@@ -157,6 +158,9 @@ const Sidebar = ({ componentName }) => {
       });
   };
 
+  console.log("window.location.pathname", window.location.pathname);
+
+  const pathName = window.location.pathname;
   return (
     <>
       <ul
@@ -191,15 +195,22 @@ const Sidebar = ({ componentName }) => {
         <hr className="sidebar-divider my-0" />
 
         {/*  <!-- Nav Item - Dashboard --> */}
-        <li className="nav-item active">
-          <a className="nav-link" href="/">
+        <li className={`nav-item ${pathName === "/" && "active"}`}>
+          <Link className="nav-link" to="/">
             <i className="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
-          </a>
+          </Link>
+        </li>
+
+        <li className={`nav-item ${pathName === "/yojnaformlist" && "active"}`}>
+          <Link className="nav-link" to="/yojnaformlist">
+            <i className="fas fa-fw fa-tachometer-alt"></i>
+            <span>Yojna Form</span>
+          </Link>
         </li>
 
         {/*  <!-- Nav Item - Pages Collapse Menu --> */}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <a
             className="nav-link collapsed"
             href="#"
@@ -228,7 +239,7 @@ const Sidebar = ({ componentName }) => {
               </a>
             </div>
           </div>
-        </li>
+        </li> */}
       </ul>
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
