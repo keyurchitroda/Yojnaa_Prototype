@@ -40,7 +40,7 @@ const SchemeListCards = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/schemesd/schemebybooth/?booth_no_new=${val}`;
+    let apiUrl = `${API_URL}/schemesd/schemebybooth/?booth_no_new=${val}&ac_no=${cardACDetails.ac_no}`;
 
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())

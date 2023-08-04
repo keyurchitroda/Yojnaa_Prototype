@@ -49,7 +49,7 @@ const BoothListCards = () => {
 
   const handleNavigateDetails = async (item, query) => {
     await dispatch(BoothDetails(item));
-    navigate(`/schemelist?${query}=${item.booth_no}`);
+    navigate(`/schemelist?booth_no_new=${item.booth_no}&ac_no=${item.ac_no}`);
   };
 
   return (
