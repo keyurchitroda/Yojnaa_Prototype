@@ -5,7 +5,7 @@ import Dahsboard from "../Dashboard/Dahsboard";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setSidebadeStyle } from "../../redux/slices/styleSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ componentName }) => {
   // const [style, setStyle] = useState(
@@ -158,9 +158,10 @@ const Sidebar = ({ componentName }) => {
       });
   };
 
-  console.log("window.location.pathname", window.location.pathname);
-
   const pathName = window.location.pathname;
+
+  const navigate = useNavigate();
+
   return (
     <>
       <ul
@@ -176,10 +177,16 @@ const Sidebar = ({ componentName }) => {
           className="sidebar-brand d-flex align-items-center justify-content-center"
           // href="/"
         >
-          <div className="sidebar-brand-icon rotate-n-15">
+          <div
+            className="sidebar-brand-icon rotate-n-15"
+            onClick={() => navigate("/")}
+          >
             <i className="fas fa-laugh-wink"></i>
           </div>
-          <div className="sidebar-brand-text mx-3">
+          <div
+            className="sidebar-brand-text mx-3"
+            onClick={() => navigate("/")}
+          >
             YOJNA <sup>2</sup>
           </div>
           <div className="text-center d-none d-md-inline">
@@ -196,7 +203,7 @@ const Sidebar = ({ componentName }) => {
 
         {/*  <!-- Nav Item - Dashboard --> */}
         <li className={`nav-item ${pathName === "/" && "active"}`}>
-          <Link className="nav-link" to="/">
+          <Link className="nav-link" to="/dashboard">
             <i className="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </Link>

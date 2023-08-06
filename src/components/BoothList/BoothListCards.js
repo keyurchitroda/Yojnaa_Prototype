@@ -57,7 +57,7 @@ const BoothListCards = () => {
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="/">Dashboard</a>
+            <a href="/dashboard">Dashboard</a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             {cardDetails.ac_no} - {cardDetails.eng_ac_name} (
