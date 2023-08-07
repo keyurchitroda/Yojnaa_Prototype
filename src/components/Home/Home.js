@@ -24,13 +24,13 @@ const Home = () => {
   const style2 = {
     // Adding media query..
     "@media (max-width: 1200px)": {
-      fontSize: "21px",
+      fontSize: "18px",
     },
     "@media (max-width: 768px)": {
-      fontSize: "21px",
+      fontSize: "18px",
     },
     "@media (max-width: 576)": {
-      fontSize: "21px",
+      fontSize: "18px",
     },
     color: "#0f106d",
   };
@@ -44,7 +44,7 @@ const Home = () => {
           style={{ borderBottom: "1px solid #ebe8e8", padding: "5px" }}
         >
           <div className="conatainer">
-            <div className="row">
+            <div className="row m-0">
               <div class="col-md-12" style={{ color: "#2c3b42" }}>
                 Government of Gujarat
                 <a href="/login" style={{ float: " right", color: "#ff5c01" }}>
@@ -69,7 +69,10 @@ const Home = () => {
               </nav>
             </div>
             <div class="col-md-6">
-              <nav class="navbar navbar-expand-lg" style={{ float: "right" }}>
+              <nav
+                class="navbar navbar-expand-lg"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 <a class="navbar-brand" href="/">
                   <img
                     src="https://gandhinagardm.in/newassets/images/digital-india.png"
@@ -88,21 +91,29 @@ const Home = () => {
         </div>
       </div>
       {/* header2 */}
-      <div
-        id="parallax"
-        class="header-content d-flex align-items-center"
-        style={{
-          backgroundRepeat: "no-repeat repeat",
-          backgroundSize: "100% 100%",
-          transform: "translate3d(0px, 0px, 0px)",
-          transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden",
-        }}
-      >
-        {/* <img
-          src="https://gandhinagardm.in/newassets/images/slider1.png"
-          alt="Logo"
-        /> */}
+      <div className="h-25">
+        <div
+          id="parallax"
+          class="header-content d-flex align-items-center img-fluid justify-content-center"
+          // style={{
+          //   backgroundImage: `url(
+          //   "https://gandhinagardm.in/newassets/images/slider1.png"
+          // )`,
+          //   height: "50vh",
+          //   width: "100%",
+          //   backgroundRepeat: "no-repeat",
+          //   backgroundSize: "contain",
+          //   transform: "translate3d(0px, 0px, 0px)",
+          //   transformStyle: "preserve-3d",
+          //   backfaceVisibility: "hidden",
+          // }}
+        >
+          <img
+            src="https://gandhinagardm.in/newassets/images/slider1.png"
+            alt="Logo"
+            class="img-fluid"
+          />
+        </div>
       </div>
       {/* COntent */}
       <div
@@ -116,7 +127,14 @@ const Home = () => {
                 class="section-title text-center pb-10"
                 style={{ paddingBottom: "10px" }}
               >
-                <h2 class="title" style={{ fontSize: "38px" }}>
+                <h2
+                  class="title"
+                  style={{
+                    fontSize: "25px",
+                    color: "#ff5722",
+                    fontWeight: "700",
+                  }}
+                >
                   વ્યક્તિગત સરકારી યોજનાઓ, ગુજરાત સરકાર
                 </h2>
               </div>
