@@ -54,9 +54,11 @@ export const YojnaSurveyForm = () => {
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {
+        console.log("response", response);
         const updatedUserInputs = {};
         response.forEach((item) => {
           updatedUserInputs[item.scheme_id] = {
+            id: item.id,
             is_beneficial: item.is_beneficial,
             earlier_benefit: item.earlier_benefit,
             rest_of_benefits: item.rest_of_benefits,
@@ -105,6 +107,7 @@ export const YojnaSurveyForm = () => {
   };
 
   const handleSubmit = () => {
+    console.log("userInputs", userInputs);
     const reqData = Object.keys(userInputs).map((yojna_id) => ({
       voters_id: _.get(yojnaForms, "singleBenificaryRecord.id", ""),
       scheme_id: yojna_id,
@@ -115,7 +118,7 @@ export const YojnaSurveyForm = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reqData),
     };
-    let apiUrl = `${API_URL}/schemesd/surveyquestion/create/`;
+    let apiUrl = `${API_URL}/schemesd/surveyquestion/`;
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then(async (response) => {

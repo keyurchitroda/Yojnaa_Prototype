@@ -16,12 +16,15 @@ import YojnaForm from "./components/YojnaForm/YojnaForm";
 import { YojnaFormEdit } from "./components/YojnaForm/YojnaFormEdit";
 import { YojnaSurveyFormAction } from "./components/YojnaSurveyForm/YojnaSurveyFormAction";
 import Home from "./components/Home/Home";
+import ViewAllScheme from "./components/Home/ViewAllScheme";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
         <Route index element={<Home />}></Route>
+        <Route path="/viewallscheme" element={<ViewAllScheme />}></Route>
         <Route path="/dashboard" element={<Layout />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Resgitser />}></Route>

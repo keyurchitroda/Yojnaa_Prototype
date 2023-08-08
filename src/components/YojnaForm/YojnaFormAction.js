@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { RotatingTriangles } from "react-loader-spinner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 import { API_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import { setSingleSchemeRecord } from "../../redux/slices/yojnaformSlice";
 
 const YojnaFormAction = () => {
   const [formsData, setFormsData] = useState([
@@ -14,6 +15,8 @@ const YojnaFormAction = () => {
   const navigate = useNavigate();
 
   const yojnaForms = useSelector((state) => state.reducer.yojnaForms);
+
+  console.log("yojnaForms=--=-=", yojnaForms.singleBenificaryRecord);
 
   const fullAddress = `${_.get(
     yojnaForms,
@@ -44,8 +47,12 @@ const YojnaFormAction = () => {
   const [villageName, setVillageName] = useState(
     _.get(yojnaForms, "singleBenificaryRecord.village_name", "")
   );
-  const [address, setAddress] = useState(fullAddress);
-  const [headName, setHeadName] = useState(fullName);
+  const [address, setAddress] = useState(
+    _.get(yojnaForms, "singleBenificaryRecord.id", "") ? fullAddress : ""
+  );
+  const [headName, setHeadName] = useState(
+    _.get(yojnaForms, "singleBenificaryRecord.id", "") ? fullName : ""
+  );
   const [age, setAge] = useState(
     _.get(yojnaForms, "singleBenificaryRecord.age", "")
   );
@@ -199,45 +206,189 @@ const YojnaFormAction = () => {
     return newErrors;
   };
 
+  const validateForCreateNewForm = () => {
+    const newFormErrors = {};
+
+    // Validate districtName
+    if (!districtName) {
+      newFormErrors.districtName = "District is required";
+    }
+
+    // Validate talukaName
+    if (!talukaName) {
+      newFormErrors.talukaName = "Taluka is required";
+    }
+
+    // Validate villageName
+    if (!villageName) {
+      newFormErrors.villageName = "Village is required";
+    }
+
+    // Validate address
+    if (!address) {
+      newFormErrors.address = "Address is required";
+    }
+
+    // Validate headName
+    if (!headName) {
+      newFormErrors.headName = "Head of the family name is required";
+    }
+
+    // Validate age
+    if (!age) {
+      newFormErrors.age = "Age is required";
+    }
+
+    // Validate totlaIncome
+    if (!totlaIncome) {
+      newFormErrors.totlaIncome = "Total family income is required";
+    }
+
+    // Validate cast
+    if (!cast) {
+      newFormErrors.cast = "Caste is required";
+    }
+
+    // Validate isIncludedSECC
+    if (!isIncludedSECC) {
+      newFormErrors.isIncludedSECC = "SECC inclusion is required";
+    }
+
+    // Validate score
+    if (!score) {
+      newFormErrors.score = "Score is required";
+    }
+
+    // Validate categoryOfRationCard
+    if (!categoryOfRationCard) {
+      newFormErrors.categoryOfRationCard =
+        "Category of Ration card is required";
+    }
+
+    // Validate isAddharPending
+    if (!isAddharPending) {
+      newFormErrors.isAddharPending = "Aadhaar card pending is required";
+    }
+
+    // Validate totalMemberAdharPending
+    if (isAddharPending === "Yes" && !totalMemberAdharPending) {
+      newFormErrors.totalMemberAdharPending =
+        "Total members pending for Aadhaar card is required";
+    }
+
+    // Validate isDisability
+    if (!isDisability) {
+      newFormErrors.isDisability = "Disability information is required";
+    }
+
+    // Validate percentageOfDisability
+    if (isDisability === "Yes" && !percentageOfDisability) {
+      newFormErrors.percentageOfDisability =
+        "Percentage of disability is required";
+    }
+
+    // // Validate formsData array
+    // const formErrors = formsData.map((form, index) => {
+    //   const errors = {};
+    //   if (!form.name.trim()) {
+    //     errors.name = `Name for form ${index + 1} is required`;
+    //   }
+    //   if (!form.age.trim()) {
+    //     errors.age = `Age for form ${index + 1} is required`;
+    //   }
+    //   if (!form.mobile.trim()) {
+    //     errors.mobile = `Mobile number for form ${index + 1} is required`;
+    //   }
+    //   return errors;
+    // });
+    // if (formErrors.length > 0) {
+    //   newErrors.formsData = formErrors;
+    // }
+
+    setErrors(newFormErrors);
+
+    // Return true if the form is valid (no errors)
+    return newFormErrors;
+  };
+
+  const dispatch = useDispatch();
+
   const handleSubmit = () => {
-    const newErrors = validateForm(); // Call the validation function to get errors
-    setErrors(newErrors); // Update the errors state with the validation result
+    if (_.get(yojnaForms, "singleBenificaryRecord.id", "")) {
+      const newErrors = validateForm();
+      setErrors(newErrors);
+      if (Object.keys(newErrors).length === 0) {
+        const reqData = {
+          total_income: totlaIncome,
+          caste: cast,
+          secc: isIncludedSECC,
+          secc_score: score,
+          rationcard_category: categoryOfRationCard,
+          is_adharcard_pending: isAddharPending,
+          pending_members:
+            isAddharPending === "Yes" ? totalMemberAdharPending : null,
+          is_disable: isDisability,
+          disability_score:
+            isDisability === "Yes" ? percentageOfDisability : null,
+        };
 
-    // Check if there are any errors, if not, proceed with form submission
-
-    if (Object.keys(newErrors).length === 0) {
-      const reqData = {
-        total_income: totlaIncome,
-        caste: cast,
-        secc: isIncludedSECC,
-        secc_score: score,
-        rationcard_category: categoryOfRationCard,
-        is_adharcard_pending: isAddharPending,
-        pending_members:
-          isAddharPending === "Yes" ? totalMemberAdharPending : null,
-        is_disable: isDisability,
-        disability_score:
-          isDisability === "Yes" ? percentageOfDisability : null,
-      };
-
-      const requestOptions = {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reqData),
-      };
-      let apiUrl = `${API_URL}/schemesd/voters/${_.get(
-        yojnaForms,
-        "singleBenificaryRecord.id",
-        ""
-      )}/`;
-      fetch(apiUrl, requestOptions)
-        .then((res) => res.json())
-        .then(async (response) => {
-          navigate("/yojnaformsurvey");
-        });
-      // Perform your form submission logic here
+        const requestOptions = {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reqData),
+        };
+        let apiUrl = `${API_URL}/schemesd/voters/${_.get(
+          yojnaForms,
+          "singleBenificaryRecord.id",
+          ""
+        )}/`;
+        fetch(apiUrl, requestOptions)
+          .then((res) => res.json())
+          .then(async (response) => {
+            navigate("/yojnaformsurvey");
+          });
+        // Perform your form submission logic here
+      } else {
+        console.log("Form has errors. Please check the fields.");
+      }
     } else {
-      console.log("Form has errors. Please check the fields.");
+      const newFormErrors = validateForCreateNewForm();
+      setErrors(newFormErrors);
+      if (Object.keys(newFormErrors).length === 0) {
+        const reqData = {
+          total_income: totlaIncome,
+          caste: cast,
+          secc: isIncludedSECC,
+          secc_score: score,
+          rationcard_category: categoryOfRationCard,
+          is_adharcard_pending: isAddharPending,
+          pending_members:
+            isAddharPending === "Yes" ? totalMemberAdharPending : null,
+          is_disable: isDisability,
+          disability_score:
+            isDisability === "Yes" ? percentageOfDisability : null,
+          ac_no: "37",
+          booth_no: "13",
+          sl_no: "31",
+          st_code: "12",
+        };
+
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reqData),
+        };
+        let apiUrl = `${API_URL}/schemesd/createvoter/`;
+        fetch(apiUrl, requestOptions)
+          .then((res) => res.json())
+          .then(async (response) => {
+            await dispatch(setSingleSchemeRecord(response));
+            navigate("/yojnaformsurvey");
+          });
+        // Perform your form submission logic here
+      } else {
+        console.log("Form has errors. Please check the fields.");
+      }
     }
   };
 
@@ -268,10 +419,16 @@ const YojnaFormAction = () => {
                 placeholder="જિલ્લો"
                 value={districtName}
                 onChange={(e) => setDistricName(e.target.value)}
-                disabled
+                disabled={
+                  _.get(yojnaForms, "singleBenificaryRecord.id", "")
+                    ? true
+                    : false
+                }
               />
               {errors.districtName && (
-                <div className="error-message">{errors.districtName}</div>
+                <div className="error-message text-danger">
+                  {errors.districtName}
+                </div>
               )}
             </div>
             <div class="form-group col-md-4">
@@ -283,8 +440,17 @@ const YojnaFormAction = () => {
                 placeholder="તાલુકો"
                 value={talukaName}
                 onChange={(e) => setTalukaName(e.target.value)}
-                disabled
+                disabled={
+                  _.get(yojnaForms, "singleBenificaryRecord.id", "")
+                    ? true
+                    : false
+                }
               />
+              {errors.talukaName && (
+                <div className="error-message text-danger">
+                  {errors.talukaName}
+                </div>
+              )}
             </div>
             <div class="form-group col-md-4">
               <label for="inputPassword4"> Village (ગામ)</label>
@@ -295,8 +461,17 @@ const YojnaFormAction = () => {
                 placeholder="ગામ"
                 value={villageName}
                 onChange={(e) => setVillageName(e.target.value)}
-                disabled
+                disabled={
+                  _.get(yojnaForms, "singleBenificaryRecord.id", "")
+                    ? true
+                    : false
+                }
               />
+              {errors.villageName && (
+                <div className="error-message text-danger">
+                  {errors.villageName}
+                </div>
+              )}
             </div>
           </div>
 
@@ -310,8 +485,15 @@ const YojnaFormAction = () => {
               placeholder="સરનામું"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              disabled
+              disabled={
+                _.get(yojnaForms, "singleBenificaryRecord.id", "")
+                  ? true
+                  : false
+              }
             />
+            {errors.address && (
+              <div className="error-message text-danger">{errors.address}</div>
+            )}
           </div>
 
           {/* step3 */}
@@ -329,8 +511,17 @@ const YojnaFormAction = () => {
                 placeholder="કુટુંબ ના વડા નું નામ"
                 value={headName}
                 onChange={(e) => setHeadName(e.target.value)}
-                disabled
+                disabled={
+                  _.get(yojnaForms, "singleBenificaryRecord.id", "")
+                    ? true
+                    : false
+                }
               />
+              {errors.headName && (
+                <div className="error-message text-danger">
+                  {errors.headName}
+                </div>
+              )}
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Age (ઉંમર)</label>
@@ -341,8 +532,15 @@ const YojnaFormAction = () => {
                 placeholder="ઉંમર"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
-                disabled
+                disabled={
+                  _.get(yojnaForms, "singleBenificaryRecord.id", "")
+                    ? true
+                    : false
+                }
               />
+              {errors.age && (
+                <div className="error-message text-danger">{errors.age}</div>
+              )}
             </div>
           </div>
 

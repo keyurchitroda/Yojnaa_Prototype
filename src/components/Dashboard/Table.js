@@ -137,10 +137,7 @@ const Table = () => {
   };
 
   const setBoothNoChange = async (e) => {
-    console.log("id-=-=-=-=-=", e.target.name);
-    console.log("value-=-=-", e.target.value);
     setBoothNo(e.target.value);
-    // await getSearchingTableRecords();
   };
 
   return (

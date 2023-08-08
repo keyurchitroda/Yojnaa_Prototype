@@ -9,10 +9,12 @@ import {
   setLoadingFalse,
   setLoadingTrue,
   setSearchValues,
+  setSingleSchemeRecord,
 } from "../../redux/slices/yojnaformSlice";
 import { MagnifyingGlass } from "react-loader-spinner";
 import _ from "lodash";
 import SchemeTable from "./SchemeTable";
+import { useNavigate } from "react-router-dom";
 
 const FormsList = () => {
   const [acLoader, setAcLoader] = useState(false);
@@ -20,6 +22,7 @@ const FormsList = () => {
   const [vibhagLoader, setVibhagLoader] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const yojnaForms = useSelector((state) => state.reducer.yojnaForms);
 
@@ -34,7 +37,8 @@ const FormsList = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/schemesd/uniqueacnames/`;
+    // let apiUrl = `${API_URL}/schemesd/uniqueacnames/`;
+    let apiUrl = `${API_URL}/schemesd/boothlistbypcno/`;
 
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
@@ -112,8 +116,21 @@ const FormsList = () => {
       });
   };
 
+  const handleCreateNewYojnaForm = async () => {
+    await dispatch(setSingleSchemeRecord({}));
+
+    navigate("/yojnaform");
+  };
+
   return (
     <div style={{ padding: "50px" }}>
+      <button
+        onClick={handleCreateNewYojnaForm}
+        class="btn btn-success"
+        style={{ marginBottom: "20px" }}
+      >
+        Create New Form
+      </button>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="exampleInputEmail1">AC Name</label>

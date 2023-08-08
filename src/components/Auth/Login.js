@@ -29,7 +29,7 @@ const Login = () => {
           setIsLoading(false);
           localStorage.setItem("token", response.data.token);
           // navigate("/");
-          window.location.href = "/";
+          window.location.href = "/dashboard";
 
           toast(response.message, {
             position: "top-right",

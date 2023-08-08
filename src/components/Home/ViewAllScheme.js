@@ -1,31 +1,56 @@
 import React from "react";
-import "./Home.css";
 import { RotatingTriangles } from "react-loader-spinner";
+import Pagination from "../pagination/Pagination";
+import { API_URL } from "../config";
 import { useState } from "react";
 import { useEffect } from "react";
-import { API_URL } from "../config";
-import ViewAllScheme from "./ViewAllScheme";
+import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const ViewAllScheme = ({ setViewAllModal }) => {
+  let items = {};
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const [currenPage, setCurrenPage] = useState(1);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setLoading(true);
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    let apiUrl = `${API_URL}/newdat/yojnanames/`;
+    let apiUrl = `${API_URL}/newdat/yojnadetails/?page=${currenPage}`;
 
     fetch(apiUrl, requestOptions)
       .then((res) => res.json())
       .then((response) => {
-        setData(response.filter((item, index) => index < 8));
+        setData(_.get(response, "results", []));
+        setTotalCount(_.get(response, "count", []));
         setLoading(false);
       });
   }, []);
+
+  const navigate = useNavigate();
+
+  const handlePageChange = (page) => {
+    setLoading(true);
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    let apiUrl = `${API_URL}/newdat/yojnadetails/?page=${page}`;
+
+    fetch(apiUrl, requestOptions)
+      .then((res) => res.json())
+      .then((response) => {
+        setData(_.get(response, "results", []));
+        setCurrenPage(page);
+        setLoading(false);
+      });
+  };
 
   const style = {
     // Adding media query..
@@ -59,17 +84,8 @@ const Home = () => {
     color: "#0f106d",
   };
 
-  const [singleRecordViewModal, setSingleRecordViewModal] = useState(false);
-
-  const navigate = useNavigate();
-
-  const handleOpenViewAllModal = () => {
-    navigate("/viewallscheme");
-  };
-
   return (
     <>
-      {/* {header} */}
       <div className="navigation">
         <div
           className="container-fuild"
@@ -122,147 +138,118 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* header2 */}
-      <div className="h-25">
+
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <a
+            onClick={() => navigate("/")}
+            style={{
+              width: "100%",
+              color: "#0c14ff",
+              textDecoration: "underline",
+            }}
+          >
+            Back To Home Page
+          </a>
+          <div class="table-responsive" style={{ padding: "30px" }}>
+            <table
+              class="table table-bordered"
+              id="dataTable"
+              width="100%"
+              cellspacing="0"
+            >
+              <thead>
+                <tr>
+                  <th>Yojna</th>
+                  <th>Department</th>
+                  <th>Eligibility Criteria</th>
+                  <th>Supporting Evidence</th>
+                  <th>Office Contact No</th>
+                  <th>Norms Of Assistance</th>
+                  <th>How To Apply</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Yojna</th>
+                  <th>Department</th>
+                  <th>Eligibility Criteria</th>
+                  <th>Supporting Evidence</th>
+                  <th>Office Contact No</th>
+                  <th>Norms Of Assistance</th>
+                  <th>How To Apply</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={8} style={{ textAlign: "center" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <RotatingTriangles
+                          visible={true}
+                          height="80"
+                          width="80"
+                          ariaLabel="rotating-triangels-loading"
+                          wrapperStyle={{ display: "inline-block" }}
+                          wrapperClass="rotating-triangels-wrapper"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  _.map(data ? data : [], (items, index) => (
+                    <tr>
+                      <td>{items.yojna ? items.yojna : "N/A"}</td>
+                      <td>{items.department ? items.department : "N/A"}</td>
+                      <td>
+                        {items.eligibility_criteria
+                          ? items.eligibility_criteria
+                          : "N/A"}
+                      </td>
+                      <td>
+                        {items.supporting_evidence
+                          ? items.supporting_evidence
+                          : "N/A"}
+                      </td>
+                      <td>
+                        {items.office_contact_no
+                          ? items.office_contact_no
+                          : "N/A"}
+                      </td>
+                      <td>
+                        {items.norms_of_assistance
+                          ? items.norms_of_assistance
+                          : "N/A"}
+                      </td>
+                      <td>{items.how_to_apply ? items.how_to_apply : "N/A"}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div
-          id="parallax"
-          class="header-content d-flex align-items-center img-fluid justify-content-center"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
         >
-          <img
-            src="https://gandhinagardm.in/newassets/images/slider1.png"
-            alt="Logo"
-            class="img-fluid"
+          <Pagination
+            className="pagination-bar"
+            currentPage={currenPage}
+            totalCount={totalCount}
+            pageSize={10}
+            onPageChange={(page) => handlePageChange(page)}
           />
         </div>
       </div>
-      {/* COntent */}
-      <div
-        className="services-area gray-bg pt-50 pb-100"
-        style={{ paddingTop: "50px", paddingBottom: "100px" }}
-      >
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-8">
-              <div
-                class="section-title text-center pb-10"
-                style={{ paddingBottom: "10px" }}
-              >
-                <h2
-                  class="title"
-                  style={{
-                    fontSize: "25px",
-                    color: "#ff5722",
-                    fontWeight: "700",
-                  }}
-                >
-                  વ્યક્તિગત સરકારી યોજનાઓ, ગુજરાત સરકાર
-                </h2>
-              </div>
-            </div>
-          </div>
-
-          {/* <div class="row justify-content-center">
-            <div class="col-md-6">
-              <a href="/dashboard" style={{ width: "100%" }}>
-                <div
-                  class="single-service text-center mt-10"
-                  style={{
-                    backgroundColor: "#257228",
-                    marginTop: "10px",
-                    border: "1px solid #eceff8",
-                    borderRadius: "5px",
-                    padding: "25px",
-                    transition: "all 0.3s ease-out 0s",
-                  }}
-                >
-                  <div class="service-icon">
-                    <img src="https://gandhinagardm.in/newassets/images/icon-2.png" />
-                  </div>
-                  <div class="service-content" style={{ marginTop: "11px" }}>
-                    <h4
-                      class="service-title"
-                      style={{ fontSize: "26px", color: "#ffeb3b" }}
-                    >
-                      તમને મળવાપાત્ર યોજનાઓ જાણો
-                    </h4>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div> */}
-
-          <div>
-            {loading ? (
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <RotatingTriangles
-                  visible={true}
-                  height="80"
-                  width="80"
-                  ariaLabel="rotating-triangels-loading"
-                  wrapperStyle={{ display: "inline-block" }}
-                  wrapperClass="rotating-triangels-wrapper"
-                />
-              </div>
-            ) : (
-              <div className="row">
-                {data.length > 0 &&
-                  data.map((item, index) => (
-                    <div key={item.id} className="col-xl-3 col-md-6 mb-4">
-                      <div className="card border-left-info shadow h-100 py-2">
-                        <div className="card-body">
-                          <div className="row no-gutters align-items-center">
-                            <div className="col mr-2">
-                              <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                {/* {item.yojna} */}
-                              </div>
-                              <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                {item.yojna}
-                              </div>
-                              <div className="h6 mb-0 font-weight-bold text-gray-800">
-                                {/* {item.total_beneficiaries} */}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            )}
-          </div>
-
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <a
-                href="department.php"
-                style={{
-                  width: "100%",
-                  color: "#0c14ff",
-                  textDecoration: "underline",
-                }}
-              ></a>
-              <div class="text-center mt-10" style={{ marginTop: "10px" }}>
-                <a
-                  style={{
-                    width: "100%",
-                    color: "#0c14ff",
-                    textDecoration: "underline",
-                  }}
-                >
-                  <h4
-                    style={{ color: "#0c14ff" }}
-                    onClick={handleOpenViewAllModal}
-                  >
-                    View All
-                  </h4>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* footer content 1 */}
 
       <div
         style={{
@@ -344,36 +331,8 @@ const Home = () => {
           </div>
         </div>
       </footer>
-
-      <style>
-        {`
-          @media (max-width: 1200px) {
-            .container {
-              max-width: 1140px;
-            }
-            /* Add other responsive styles here */
-          }
-  
-          @media (max-width: 768px) {
-            .container {
-              max-width: 720px;
-            }
-            /* Adjust navigation, header, and other sections for mobile */
-            .navigation {
-              padding: 10px;
-            }
-            .header-content {
-              // Adjust styles for the header content
-            }
-            .single-service {
-              // Adjust styles for service card
-            }
-            /* Add other responsive styles here */
-          }
-        `}
-      </style>
     </>
   );
 };
 
-export default Home;
+export default ViewAllScheme;
