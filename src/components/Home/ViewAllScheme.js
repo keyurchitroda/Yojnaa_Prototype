@@ -316,9 +316,6 @@ const ViewAllScheme = ({ setViewAllModal }) => {
                   style={{ paddingBottom: "20px", color: "#fff" }}
                 >
                   <p>
-                    <span style={{ float: "left" }}>
-                      2021 © District Administration, Gandhinagar
-                    </span>
                     <span style={{ float: "right" }}>
                       Site Visitor :{" "}
                       <img
