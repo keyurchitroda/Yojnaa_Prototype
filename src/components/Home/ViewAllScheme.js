@@ -309,6 +309,9 @@ const ViewAllScheme = ({ setViewAllModal }) => {
                   style={{ paddingBottom: "20px", color: "#fff" }}
                 >
                   <p>
+                    <span style={{ float: "left" }}>
+                      2023 © District Administration
+                    </span>
                     <span style={{ float: "right" }}>
                       Site Visitor :{" "}
                       <img
