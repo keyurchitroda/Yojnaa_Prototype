@@ -129,7 +129,7 @@ const Home = () => {
           class="header-content d-flex align-items-center img-fluid justify-content-center"
         >
           <img
-            src="https://gandhinagardm.in/newassets/images/slider1.png"
+            src="	https://www.mygov.in/sites/all/themes/mygov/images/pmfby/pmfby-banner.jpg"
             alt="Logo"
             class="img-fluid"
           />
