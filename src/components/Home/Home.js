@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { API_URL } from "../config";
 import ViewAllScheme from "./ViewAllScheme";
 import { useNavigate } from "react-router-dom";
+import SingleRecordView from "./SingleRecordView";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -60,11 +61,17 @@ const Home = () => {
   };
 
   const [singleRecordViewModal, setSingleRecordViewModal] = useState(false);
+  const [newId, setNewId] = useState();
 
   const navigate = useNavigate();
 
   const handleOpenViewAllModal = () => {
     navigate("/viewallscheme");
+  };
+
+  const handleOpenSingleRecordModel = (id) => {
+    setNewId(id);
+    setSingleRecordViewModal(true);
   };
 
   return (
@@ -96,7 +103,7 @@ const Home = () => {
                     src="https://gandhinagardm.in/newassets/images/coat_arms_india.png"
                     alt="Logo"
                   />
-                  <span style={style2}> જિલ્લા વહીવટીતંત્ર, ગાંધીનગર</span>
+                  {/* <span style={style2}> જિલ્લા વહીવટીતંત્ર, ગાંધીનગર</span> */}
                 </a>
               </nav>
             </div>
@@ -191,6 +198,13 @@ const Home = () => {
             </div>
           </div> */}
 
+          {singleRecordViewModal && (
+            <SingleRecordView
+              setSingleRecordViewModal={setSingleRecordViewModal}
+              newId={newId}
+            />
+          )}
+
           <div>
             {loading ? (
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -207,7 +221,11 @@ const Home = () => {
               <div className="row">
                 {data.length > 0 &&
                   data.map((item, index) => (
-                    <div key={item.id} className="col-xl-3 col-md-6 mb-4">
+                    <div
+                      key={item.id}
+                      className="col-xl-3 col-md-6 mb-4"
+                      onClick={() => handleOpenSingleRecordModel(item.id)}
+                    >
                       <div className="card border-left-info shadow h-100 py-2">
                         <div className="card-body">
                           <div className="row no-gutters align-items-center">

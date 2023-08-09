@@ -160,24 +160,26 @@ const ViewAllScheme = ({ setViewAllModal }) => {
             >
               <thead>
                 <tr>
-                  <th>Yojna</th>
-                  <th>Department</th>
-                  <th>Eligibility Criteria</th>
-                  <th>Supporting Evidence</th>
-                  <th>Office Contact No</th>
-                  <th>Norms Of Assistance</th>
-                  <th>How To Apply</th>
+                  <th>યોજનાનું નામ</th>
+                  <th>વિભાગનું નામ</th>
+                  <th>સહાયના ધોરણો (કિટ/નાણાંકીય) One Time/Monthly</th>
+                  <th>લાયકાતના ધોરણો</th>
+                  <th>ફોર્મ સાથે જોડવાના આધાર પુરાવાની યાદી</th>
+                  <th>કચેરીનો સંપર્ક નંબર</th>
+                  <th>અરજી કરવાની રીત</th>
+                  <th>લીંક</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                  <th>Yojna</th>
-                  <th>Department</th>
-                  <th>Eligibility Criteria</th>
-                  <th>Supporting Evidence</th>
-                  <th>Office Contact No</th>
-                  <th>Norms Of Assistance</th>
-                  <th>How To Apply</th>
+                  <th>યોજનાનું નામ</th>
+                  <th>વિભાગનું નામ</th>
+                  <th>સહાયના ધોરણો (કિટ/નાણાંકીય) One Time/Monthly</th>
+                  <th>લાયકાતના ધોરણો</th>
+                  <th>ફોર્મ સાથે જોડવાના આધાર પુરાવાની યાદી</th>
+                  <th>કચેરીનો સંપર્ક નંબર</th>
+                  <th>અરજી કરવાની રીત</th>
+                  <th>લીંક</th>
                 </tr>
               </tfoot>
               <tbody>
@@ -207,6 +209,11 @@ const ViewAllScheme = ({ setViewAllModal }) => {
                       <td>{items.yojna ? items.yojna : "N/A"}</td>
                       <td>{items.department ? items.department : "N/A"}</td>
                       <td>
+                        {items.norms_of_assistance
+                          ? items.norms_of_assistance
+                          : "N/A"}
+                      </td>
+                      <td>
                         {items.eligibility_criteria
                           ? items.eligibility_criteria
                           : "N/A"}
@@ -221,12 +228,9 @@ const ViewAllScheme = ({ setViewAllModal }) => {
                           ? items.office_contact_no
                           : "N/A"}
                       </td>
-                      <td>
-                        {items.norms_of_assistance
-                          ? items.norms_of_assistance
-                          : "N/A"}
-                      </td>
+
                       <td>{items.how_to_apply ? items.how_to_apply : "N/A"}</td>
+                      <td>{items.link ? items.link : "N/A"}</td>
                     </tr>
                   ))
                 )}
