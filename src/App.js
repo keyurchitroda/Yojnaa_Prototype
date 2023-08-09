@@ -17,7 +17,6 @@ import { YojnaFormEdit } from "./components/YojnaForm/YojnaFormEdit";
 import { YojnaSurveyFormAction } from "./components/YojnaSurveyForm/YojnaSurveyFormAction";
 import Home from "./components/Home/Home";
 import ViewAllScheme from "./components/Home/ViewAllScheme";
-import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const router = createBrowserRouter(

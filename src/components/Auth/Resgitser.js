@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { API_URL } from "../config";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 
 const Resgitser = () => {
   const [firstName, setFirstName] = useState("");
@@ -39,16 +40,7 @@ const Resgitser = () => {
         if (response.status === 1) {
           setIsLoading(false);
           setOtpVerifyScreen(true);
-          toast(response.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toastr.success(response.message);
         } else {
           setIsLoading(false);
 
@@ -59,40 +51,13 @@ const Resgitser = () => {
 
   const handleErrorResponse = (error) => {
     if (error.email) {
-      toast(error.email[0], {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toastr.error(error.email[0]);
     }
     if (error.mobile_number) {
-      toast.error(error.mobile_number[0], {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toastr.error(error.mobile_number[0]);
     }
     if (error.username) {
-      toast(error.username[0], {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toastr.error(error.username[0]);
     }
   };
 
@@ -116,29 +81,12 @@ const Resgitser = () => {
           setIsLoading(false);
 
           navigate("/login");
-          toast.success(response.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+
+          toastr.success(response.message);
         } else {
           setIsLoading(false);
 
-          toast.error(response.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toastr.error(response.message);
         }
       });
   };

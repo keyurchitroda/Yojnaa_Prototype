@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { API_URL } from "../config";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
@@ -32,31 +31,10 @@ const Login = () => {
           localStorage.setItem("token", response.data.token);
           // navigate("/");
           window.location.href = "/dashboard";
-
-          // toast(response.message, {
-          //   position: "top-right",
-          //   autoClose: 5000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "light",
-          // });
-          toastr.success(response.message, "Miracle Max Says");
+          toastr.success(response.message);
         } else {
           setIsLoading(false);
-          // toast.error(response.message, {
-          //   position: "top-right",
-          //   autoClose: 5000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "light",
-          // });
-          toastr.error(response.message, "Miracle Max Says");
+          toastr.error(response.message);
         }
       });
   };
