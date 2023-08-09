@@ -112,7 +112,7 @@ const ViewAllScheme = ({ setViewAllModal }) => {
                     src="https://gandhinagardm.in/newassets/images/coat_arms_india.png"
                     alt="Logo"
                   />
-                  <span style={style2}> જિલ્લા વહીવટીતંત્ર, ગાંધીનગર</span>
+                  {/* <span style={style2}> જિલ્લા વહીવટીતંત્ર, ગાંધીનગર</span> */}
                 </a>
               </nav>
             </div>

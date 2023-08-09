@@ -136,7 +136,7 @@ const Home = () => {
           class="header-content d-flex align-items-center img-fluid justify-content-center"
         >
           <img
-            src="	https://www.mygov.in/sites/all/themes/mygov/images/pmfby/pmfby-banner.jpg"
+            src="https://blp.gujarat.gov.in/images/har-ghar-tiranga-web-banner-download-section-english-version.jpg"
             alt="Logo"
             class="img-fluid"
           />
@@ -317,13 +317,6 @@ const Home = () => {
                 આશા રાખીએ કે જરૂરિયાતમંદ દરેક વ્યક્તિને આ વેબસાઈટના માધ્યમથી
                 મહત્તમ સરકારી યોજનાના લાભ મેળવવામાં ઉપયોગી પુરવાર થાય.{" "}
               </p>
-              <p style={{ textAlign: "right" }}>
-                (એચ.કે. કોયા I.A.S.)
-                <br />
-                કલેકટર અને જિલ્લા મેજીસ્ટ્રેટ
-                <br />
-                ગાંધીનગર જિલ્લો
-              </p>
             </div>
           </div>
         </div>
@@ -343,9 +336,6 @@ const Home = () => {
                   style={{ paddingBottom: "20px", color: "#fff" }}
                 >
                   <p>
-                    <span style={{ float: "left" }}>
-                      2021 © District Administration, Gandhinagar
-                    </span>
                     <span style={{ float: "right" }}>
                       Site Visitor :{" "}
                       <img
